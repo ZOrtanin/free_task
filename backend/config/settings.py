@@ -131,5 +131,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# указывает на кастомную модель пользователя
 AUTH_USER_MODEL = 'users.User'
+
+# Это позволит Django хранить загружаемые файлы в папке media/
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
+    > -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+    >
+    <style type="text/css">
+        
+    </style>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="columns is-centered full-height">
+                <!-- <h1 class="title">Hello, Bulma!</h1> -->
+                <!-- <div class="column"></div> -->
+                <div class="column is-3">
+                    <div class="card">
+                        <div class="card-content">
+                            <p class="title">Регистрация</p>
+                            <p class="content">
+                                <div class="field">
+                                    <!-- <label class="label">Name</label>
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Text input">
+                                    </div> -->
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        {% for field in form %}
+                                            <div class="mb-3">
+                                                <label class="label">{{ field.label }}</label>
+                                                <div class="control">
+                                                    {{ field }}
+                                                </div>
+                                                {% if field.errors %}
+                                                    <div class="text-danger">{{ field.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                        <button type="submit" class="button is-primary">Зарегистрироваться</button>
+                                    </form>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="column"></div> -->
+            </div>
+            
+
+        </div>
+    </section>    
+</body>
+</html>
