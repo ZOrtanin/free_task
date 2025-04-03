@@ -1,8 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomLoginForm
+from django.contrib.auth.views import LoginView
+
 
 # Create your views here.
+class CustomLoginView(LoginView):
+    form_class = CustomLoginForm
+    template_name = 'users/login.html'
+
+
+def login_view(request):
+    return render(request, 'users/login.html')
+
+
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -14,7 +25,3 @@ def register(request):
         form = CustomUserCreationForm()
 
     return render(request, 'users/register.html', {'form': form})
-
-
-def login_view(request):
-    return render(request, 'users/login.html')

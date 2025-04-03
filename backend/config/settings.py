@@ -137,3 +137,7 @@ AUTH_USER_MODEL = 'users.User'
 # Это позволит Django хранить загружаемые файлы в папке media/
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# редиректы логин логаут
+LOGIN_REDIRECT_URL = '/admin/users/user/'  # Куда перенаправлять после входа
+LOGOUT_REDIRECT_URL = '/'  # Куда отправлять после выхода

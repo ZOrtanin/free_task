@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.shortcuts import redirect
 
 urlpatterns = [
-    path('', lambda request: redirect('users/register/')),
+    path('', lambda request: redirect('users/login/')),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
 ]
