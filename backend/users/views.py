@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .forms import CustomUserCreationForm, CustomLoginForm
+from .forms import CustomUserCreationForm, CustomLoginForm, UserProfileForm
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -25,3 +26,21 @@ def register(request):
         form = CustomUserCreationForm()
 
     return render(request, 'users/register.html', {'form': form})
+
+
+@login_required
+def dashboard_view(request):
+    return render(request, 'users/dashboard.html')
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # После сохранения редиректим обратно на профиль
+    else:
+        form = UserProfileForm(instance=request.user)
+    
+    return render(request, 'users/profile.html', {'form': form})

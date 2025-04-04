@@ -1,0 +1,37 @@
+{% extends 'users/base.html' %}
+
+{% block title %}Дашборд{% endblock %}
+
+{% block content %}
+    <div class="container is-fluid ">            
+
+            <div class="columns is-fullheight">
+
+                <div class="column ">
+                    <h1>Профиль пользователя</h1>
+                    
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="button" type="submit">Сохранить изменения</button>
+                    </form>                    
+                </div> 
+
+                <div class="column">
+                    <h1 class="title">Активные</h1>                    
+                </div>
+                
+                <div class="column ">
+                  <h1 class="title">Забытые</h1>
+                </div>
+
+            </div>
+            
+
+        </div>
+{% endblock %} 
+    
+
+    
+        
+   

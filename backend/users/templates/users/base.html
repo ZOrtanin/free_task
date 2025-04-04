@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Мой сайт{% endblock %}</title>
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
+    > -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+    >
+    <style>
+        
+    
+  </style>
+</head>
+<body>
+    <!-- Шапка -->
+      <nav class="navbar is-light">
+        <div class="container is-fluid">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+              <h1 class="title">FreeTask</h1>
+            </a>
+          </div>
+
+          <div class="navbar-start">
+            <a href="{% url 'dashboard' %}" class="navbar-item">
+              Доска
+            </a>
+            <a class="navbar-item">
+              Задачи
+            </a>
+            <a class="navbar-item">
+              Расписание
+            </a>
+            <a class="navbar-item">
+              Статистика
+            </a>
+          </div>
+          
+          <div class="navbar-end">
+            <div class="navbar-item is-hoverable">
+              <a class="navbar-link">                
+                <strong>{{ request.user.username }}</strong>
+              </a>
+
+              <div class="navbar-dropdown">
+                <a href="{% url 'profile' %}" class="navbar-item">
+                  Профиль
+                </a>
+                <a class="navbar-item">
+                  Настройки
+                </a>
+                
+                <hr class="navbar-divider">
+                <div class="navbar-item">
+                  <form method="post" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <button type="submit" class="button">Выйти</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="navbar-item">
+              <img class="is-rounded" src="/media/{{ request.user.avatar }}" alt="Image" />
+            </div> 
+          </div>
+        </div>
+      </nav> 
+    
+
+    <!-- Основное содержимое -->
+    
+        {% block content %}{% endblock %}
+   
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>FreeTask</strong> by <a href="">Kukolschikov Egor</a>.
+        
+        </p>
+      </div>
+    </footer>  
+</body>
+</html>

@@ -24,6 +24,7 @@ urlpatterns = [
     path('', lambda request: redirect('users/login/')),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
+    
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

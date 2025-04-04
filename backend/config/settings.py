@@ -139,5 +139,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # редиректы логин логаут
-LOGIN_REDIRECT_URL = '/admin/users/user/'  # Куда перенаправлять после входа
+LOGIN_REDIRECT_URL = '/users/dashboard/'  # Куда перенаправлять после входа
 LOGOUT_REDIRECT_URL = '/'  # Куда отправлять после выхода
