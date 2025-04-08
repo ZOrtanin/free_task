@@ -8,14 +8,15 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
     > -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
     >
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <style>
-        
-    
-  </style>
+    </style>
 </head>
 <body>
     <!-- Шапка -->
@@ -31,14 +32,24 @@
             <a href="{% url 'dashboard' %}" class="navbar-item">
               Доска
             </a>
-            <a class="navbar-item">
+            <a href="{% url 'tasks' %}" class="navbar-item">
               Задачи
             </a>
-            <a class="navbar-item">
+            <a href="{% url 'schedule' %}" class="navbar-item">
               Расписание
             </a>
-            <a class="navbar-item">
+            <a href="{% url 'statistics' %}" class="navbar-item">
               Статистика
+            </a>
+            <a href="{% url 'statistics' %}" class="navbar-item">
+              
+              <span class="icon-text">
+                <span>Публичные задачи</span>
+                <span class="icon">
+                  <ion-icon name="search-outline"></ion-icon>
+                </span>                
+              </span>
+
             </a>
           </div>
           
@@ -52,7 +63,7 @@
                 <a href="{% url 'profile' %}" class="navbar-item">
                   Профиль
                 </a>
-                <a class="navbar-item">
+                <a href="{% url 'settings' %}" class="navbar-item">
                   Настройки
                 </a>
                 
@@ -83,7 +94,6 @@
       <div class="content has-text-centered">
         <p>
           <strong>FreeTask</strong> by <a href="">Kukolschikov Egor</a>.
-        
         </p>
       </div>
     </footer>  

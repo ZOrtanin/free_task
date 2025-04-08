@@ -1,0 +1,277 @@
+{% extends 'users/base.html' %}
+
+{% block title %}Расписание{% endblock %}
+
+{% block content %}
+    <style>
+        .timeline-container {
+            display: flex;
+            /*  max-height: 600px;*/
+        }
+
+        .time-labels {
+          flex: 0 0 80px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 1rem 0;
+          border-right: 1px solid #ccc;
+          font-size: 0.85rem;
+        }
+
+        .time-labels div{
+            min-height: 50px;
+        }
+
+        .time-slots {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          padding: 1rem 0;
+        }
+
+        .time-slot {
+          flex: 1;
+          border-bottom: 1px solid #eee;
+          position: relative;
+          min-height: 50px;
+        }
+
+        .event-block {
+          position: absolute;
+          left: 10px;
+          top: 10px;
+          right: 10px;
+          background-color: #00d1b2;
+          color: white;
+          padding: 5px;
+          border-radius: 4px;
+          cursor: grab;
+        }
+
+        .drag-over {
+          background-color: #f0f8ff;
+        }
+    </style>
+
+    <!-- Основное содержимое -->
+    <section class="hero section has-background-light ">
+        <div class="container is-fluid ">
+            <div class="columns is-fullheight">
+
+                <!-- Расписание -->
+                <div class="column is-5">
+                    <div class="timeline-container">
+
+                        <!-- Левые метки времени -->
+                        <div class="time-labels">
+                            <div>00:00</div>
+                            <div>01:00</div>
+                            <div>02:00</div>
+                            <div>03:00</div>
+                            <div>04:00</div>
+                            <div>05:00</div>
+                            <div>06:00</div>
+                            <div>07:00</div>
+                            <div>08:00</div>
+                            <div>09:00</div>
+                            <div>10:00</div>
+                            <div>11:00</div>
+                            <div>12:00</div>
+                            <div>13:00</div>
+                            <div>14:00</div>
+                            <div>15:00</div>
+                            <div>16:00</div>
+                            <div>17:00</div>
+                            <div>18:00</div>
+                            <div>19:00</div>
+                            <div>20:00</div>
+                            <div>21:00</div>
+                            <div>22:00</div>
+                            <div>23:00</div>
+                        </div>
+
+                        <!-- Временные слоты -->
+                        <div class="time-slots" id="timeline">
+                            <div class="time-slot" data-time="00:00"></div>
+                            <div class="time-slot" data-time="01:00"></div>
+                            <div class="time-slot" data-time="02:00"></div>
+                            <div class="time-slot" data-time="03:00"></div>
+                            <div class="time-slot" data-time="04:00"></div>
+                            <div class="time-slot" data-time="05:00"></div>
+                            <div class="time-slot" data-time="06:00"></div>
+                            <div class="time-slot" data-time="07:00"></div>
+                            <div class="time-slot" data-time="08:00"></div>
+                            <div class="time-slot" data-time="09:00"></div>
+                            <div class="time-slot" data-time="10:00"></div>
+                            <div class="time-slot" data-time="11:00"></div>
+                            <div class="time-slot" data-time="12:00"></div>
+                            <div class="time-slot" data-time="13:00"></div>
+                            <div class="time-slot" data-time="14:00"></div>
+                            <div class="time-slot" data-time="15:00"></div>
+                            <div class="time-slot" data-time="16:00"></div>
+                            <div class="time-slot" data-time="17:00"></div>
+                            <div class="time-slot" data-time="18:00"></div>
+                            <div class="time-slot" data-time="19:00"></div>
+                            <div class="time-slot" data-time="20:00"></div>
+                            <div class="time-slot" data-time="21:00"></div>
+                            <div class="time-slot" data-time="22:00"></div>
+                            <div class="time-slot" data-time="23:00"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- список задачь -->
+                <div class="column is-5 has-background-white">
+
+                    <div class="field">
+                        <label class="label">Фильтр задач</label>
+                        <div class="control has-icons-right">
+                          
+                        </div>
+                    </div>
+
+                    
+                    <div class="box" draggable="true" id="task">
+                        <article class="media">                                       
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>                                                    
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                        efficitur sit amet massa 
+                                    </p>
+                                </div>                                          
+                            </div>
+                            <div class="media-right">
+                                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="box" draggable="true" id="task">
+                        <article class="media">                                       
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>                                                    
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                        efficitur sit amet massa 
+                                    </p>
+                                </div>                                          
+                            </div>
+                            <div class="media-right">
+                                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                            </div>
+                        </article>                       
+                    </div>
+
+                    <div class="box" draggable="true" id="task">
+                        <article class="media">                                       
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>                                                    
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                        efficitur sit amet massa 
+                                    </p>
+                                </div>                                          
+                            </div>
+                            <div class="media-right">
+                                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                            </div>
+                        </article>                       
+                    </div>
+
+                    <div class="box" draggable="true" id="task">
+                        <article class="media">                                       
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>                                                    
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                        efficitur sit amet massa 
+                                    </p>
+                                </div>                                          
+                            </div>
+                            <div class="media-right">
+                                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                            </div>
+                        </article>                       
+                    </div>                    
+
+                </div>
+
+                <!-- настройка расписания -->
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Рабочий день</label>
+                        <div class="control has-icons-right">
+                          <input class="input" type="text" placeholder="с 7:00 до 11:00">
+                          <span class="icon is-small is-right">
+                            <ion-icon name="timer-outline"></ion-icon>
+                          </span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Уведомления</label>
+                        <div class="select">
+                            <select>
+                                <option>Телеграмм сообщение</option>
+                                <option>Телеграмм звонок</option>
+                                <option>Пушап сообщение</option>
+                            </select>
+                        </div>
+                        <div class="control has-icons-right">
+                            <label class="checkbox">
+                                <input type="checkbox" />
+                                Уведомлять о начале задачи
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" />
+                                Уведомлять о конце задачи
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>        
+    </section>
+
+    <script>
+        const task = document.getElementById('task');
+        const timeSlots = document.querySelectorAll('.time-slot');
+
+        task.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', 'event-block');
+        });
+
+        timeSlots.forEach(slot => {
+          slot.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            slot.classList.add('drag-over');
+          });
+
+          slot.addEventListener('dragleave', () => {
+            slot.classList.remove('drag-over');
+          });
+
+          slot.addEventListener('drop', (e) => {
+            e.preventDefault();
+            slot.classList.remove('drag-over');
+
+            // Удаляем предыдущий блок, если есть
+            const existing = slot.querySelector('.event-block');
+            if (existing) existing.remove();
+
+            // Создаем новый блок события
+            const block = document.createElement('div');
+            block.className = 'event-block';
+            block.textContent = 'Событие';
+
+            slot.appendChild(block);
+          });
+        });
+  </script>
+{% endblock %}

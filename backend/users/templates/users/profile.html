@@ -1,34 +1,202 @@
 {% extends 'users/base.html' %}
 
-{% block title %}Дашборд{% endblock %}
+{% block title %}Профиль{% endblock %}
 
 {% block content %}
-    <div class="container is-fluid ">            
 
-            <div class="columns is-fullheight">
+<section class="hero section has-background-light ">
+    <div class="container is-fluid"> 
+        <div class="columns is-fullheight">           
+                
+           
+             
+                <div class="column is-3">
+                    <h1 class="title">Профиль {{ request.user.username }}</h1>
 
-                <div class="column ">
-                    <h1>Профиль пользователя</h1>
-                    
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button class="button" type="submit">Сохранить изменения</button>
-                    </form>                    
+                    <div class="field">              
+                        <figure class="image is-128x128">
+                          <!-- <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" /> -->
+                          <img class="is-rounded" src="/media/{{ request.user.avatar }}" />
+                        </figure>
+                    </div>
+
+                    <div class="field">
+                        <p>{{ request.user.last_name }}</p>
+                        <p>{{ request.user.first_name }}</p>                        
+                        <p>{{ request.user.middle_name }}</p>
+                    </div>
+
                 </div> 
 
-                <div class="column">
-                    <h1 class="title">Активные</h1>                    
+                <div class="column is-7 has-background-white">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Можешь помочь</label>                        
+                            </div>
+                            <div class="field">
+                                <div class="box">
+                                    <article class="media">                                       
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>                                                    
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                                    efficitur sit amet massa 
+                                                </p>
+                                            </div>                                          
+                                        </div>
+                                        <div class="media-right">
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="box">
+                                    <article class="media">                                       
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>                                                    
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                                    efficitur sit amet massa 
+                                                </p>
+                                            </div>                                          
+                                        </div>
+                                        <div class="media-right">
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="box">
+                                    <article class="media">                                       
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>                                                    
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                                    efficitur sit amet massa 
+                                                </p>
+                                            </div>                                          
+                                        </div>
+                                        <div class="media-right">
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="box">
+                                    <article class="media">                                       
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>                                                    
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                                    efficitur sit amet massa 
+                                                </p>
+                                            </div>                                          
+                                        </div>
+                                        <div class="media-right">
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="box">
+                                    <article class="media">                                       
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>                                                    
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                                    efficitur sit amet massa 
+                                                </p>
+                                            </div>                                          
+                                        </div>
+                                        <div class="media-right">
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Смотри как можно</label>                        
+                            </div> 
+                            <div class="field">
+                                <div class="box">
+                                    <article class="media">                                       
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>                                                    
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                                    efficitur sit amet massa 
+                                                </p>
+                                            </div>                                          
+                                        </div>
+                                        <div class="media-right">
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="box">
+                                    <article class="media">                                       
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>                                                    
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                                    efficitur sit amet massa 
+                                                </p>
+                                            </div>                                          
+                                        </div>
+                                        <div class="media-right">
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="box">
+                                    <article class="media">                                       
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>                                                    
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                                    efficitur sit amet massa 
+                                                </p>
+                                            </div>                                          
+                                        </div>
+                                        <div class="media-right">
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="column ">
-                  <h1 class="title">Забытые</h1>
+                <div class="column is-flex-desktop-only ">
+
+                    <div class="field">
+                        <label class="label">Друзья</label>                        
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Команды</label>                        
+                    </div>
+
                 </div>
 
-            </div>
-            
-
+           
         </div>
+    </div>
+</section>
+
 {% endblock %} 
     
 

@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
 from .models import User
 
 
@@ -29,20 +29,43 @@ class CustomUserCreationForm(UserCreationForm):
         for field_name in ['password1', 'password2']:
             self.fields[field_name].widget.attrs.update({
                 'class': 'input',
-                'placeholder': 'Введите пароль' if field_name == 'password1' else 'Повторите пароль'
+                'placeholder': 'Введите пароль' 
+                if field_name == 'password1' else 'Повторите пароль'
             })
 
         
 class CustomLoginForm(AuthenticationForm):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Имя пользователя'})
+        widget=forms.TextInput(
+            attrs={'class': 'input', 'placeholder': 'Имя пользователя'})
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'Пароль'})
+        widget=forms.PasswordInput(
+            attrs={'class': 'input', 'placeholder': 'Пароль'})
     )
 
 
 class UserProfileForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'middle_name', 'email', 'avatar', 'phone_number', 'telegram_username']
+        fields = [
+            'username', 'avatar', 'first_name', 'last_name',
+            'middle_name', 'email', 'phone_number', 'telegram_username']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print(self.fields['first_name'].widget.attrs)
+        for field_name in self.fields:            
+            self.fields[field_name].widget.attrs.update({
+                'class': 'input',
+            })
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'input',
+                'placeholder': self.fields[field].label
+            })

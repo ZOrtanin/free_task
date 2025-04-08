@@ -1,0 +1,127 @@
+{% extends 'users/base.html' %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+    <!-- Основное содержимое -->
+    <section class="hero section has-background-light ">
+        <nav class="level pt-6">
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Всего задачь</p>
+                  <p class="title">3,456</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Выполненые</p>
+                  <p class="title">123</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Друзей</p>
+                  <p class="title">456K</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Часов работы</p>
+                  <p class="title">789</p>
+                </div>
+              </div>
+        </nav> 
+
+        <div class="columns">
+
+            <!-- График 1: Круговая диаграмма -->
+            <div class="column">
+                <div class="box">
+                    <h2 class="subtitle">Статус задач</h2>
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+
+            <!-- График 2: Гистограмма -->
+            <div class="column">
+            <div class="box">
+                <h2 class="subtitle">Задачи по дням недели</h2>
+                <canvas id="barChart"></canvas>
+            </div></div>
+
+            <!-- График 3: Линейный график -->
+            <div class="column">
+            <div class="box">
+                <h2 class="subtitle">Продуктивность</h2>
+                <canvas id="lineChart"></canvas>
+            </div>
+            <div class="box">
+                <h2 class="subtitle">Типовые задачи</h2>
+                <p> Верстка страницы 3ч </p>
+                <p> Верстка страницы 3ч </p>
+                <p> Верстка страницы 3ч </p>
+                <p> Верстка страницы 3ч </p>
+            </div>
+            </div>
+
+        </div>
+        
+    </section>
+
+    <script>
+    // Круговая диаграмма
+    new Chart(document.getElementById('pieChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Выполнено', 'В процессе', 'Просрочено'],
+        datasets: [{
+          data: [12, 5, 3],
+          backgroundColor: ['#00d1b2', '#ffdd57', '#ff3860']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+
+    // Гистограмма
+    new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+        datasets: [{
+          label: 'Задач выполнено',
+          data: [3, 6, 4, 5, 2, 1, 0],
+          backgroundColor: '#3273dc'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    // Линейный график
+    new Chart(document.getElementById('lineChart'), {
+      type: 'line',
+      data: {
+        labels: ['1 Апр', '2 Апр', '3 Апр', '4 Апр', '5 Апр'],
+        datasets: [{
+          label: 'Задачи/день',
+          data: [2, 3, 4, 3, 5],
+          fill: false,
+          borderColor: '#00d1b2',
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+  </script>
+{% endblock %}
