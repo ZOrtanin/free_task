@@ -24,15 +24,23 @@
                 <!-- <div class="column"></div> -->
                 <div class="column is-3">
                     <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                {% if avatar_path %}
+                                    <img class="" src="/media/{{ MEDIA_URL }}{{ avatar_path }}" />
+                                {% endif %}
+                            </figure>
+                          </div>
                         <div class="card-content">
                             <p class="title">Регистрация</p>
                             <p class="content">
-                                <div class="field">
+                                <div class="field is-centered">
                                     <!-- <label class="label">Name</label>
                                     <div class="control">
                                         <input class="input" type="text" placeholder="Text input">
                                     </div> -->
                                     <form method="post">
+                                        
                                         {% csrf_token %}
                                         {% for field in form %}
                                             <div class="mb-3">

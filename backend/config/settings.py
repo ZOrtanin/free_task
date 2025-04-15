@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+import sys
 import environ
 from pathlib import Path
 
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
+    'users','tasks',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # редиректы логин логаут
 LOGIN_REDIRECT_URL = '/users/dashboard/'  # Куда перенаправлять после входа
 LOGOUT_REDIRECT_URL = '/'  # Куда отправлять после выхода
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,  # <- важно!
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,  # <- вывод в stdout, Docker это поймает
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}

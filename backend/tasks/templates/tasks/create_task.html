@@ -1,0 +1,32 @@
+{% block content %}
+<div class="content">
+  <h1>Создать задачу</h1>
+
+  <form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+      
+      <div class="field">
+        <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+        <div class="control has-icons-right">
+        {{ field }}
+
+        {% if field.label == 'Deadline' %}
+          <span class="icon is-small is-right">
+            <ion-icon name="calendar-number-outline"></ion-icon>
+          </span>
+        {% endif %}
+        </div>
+        
+        {% if field.errors %}
+          <div class="text-danger">{{ field.errors }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}    
+
+    <button class="button" type="submit">Создать</button>
+  </form>
+</div>
+{% endblock %}

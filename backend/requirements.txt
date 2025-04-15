@@ -5,3 +5,4 @@ psycopg2
 django-environ
 drf-spectacular
 Pillow
+numpy

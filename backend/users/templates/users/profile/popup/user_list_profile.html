@@ -1,0 +1,36 @@
+
+    
+  {% for user in users %}
+    
+        
+      
+      {% if user.id in following_ads %}
+        <form method="post" action="{% url 'unfollow_user' user.id %}">
+          {% csrf_token %}
+          
+          <!-- <button class="button is-small" type="submit">Отписаться</button> -->
+            <button class="button is-light" type="submit">
+                <span>{{ user.username }}</span>
+                <span class="icon ">
+                    <ion-icon name="close-circle-outline"></ion-icon>
+                </span>
+                
+            </button>
+        </form>
+      {% else %}
+        <form method="post" action="{% url 'follow_user' user.id %}">
+          {% csrf_token %}
+          <!-- <button class="button is-small" type="submit">Следить</button> -->
+            <button class="button is-success" type="submit">
+                <span class="icon ">
+                    <ion-icon name="add-circle-outline"></ion-icon> 
+                </span>
+                <span>{{ user.username }}</span>
+            </button>
+        </form>
+      {% endif %}
+        
+  {% endfor %}
+
+    
+ 

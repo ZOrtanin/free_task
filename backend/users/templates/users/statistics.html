@@ -5,6 +5,36 @@
 {% block content %}
     <!-- Основное содержимое -->
     <section class="hero section has-background-light ">
+        
+
+        <div class="columns">
+
+            <!-- График 1: Круговая диаграмма -->
+            <div class="column" >
+                <div class="box" style=" max-height: 276px;">
+                    <h2 class="subtitle">Статус задач</h2>
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+
+            <!-- График 2: Гистограмма -->
+            <div class="column">
+              <div class="box">
+                  <h2 class="subtitle">Задачи по дням недели</h2>
+                  <canvas id="barChart"></canvas>
+              </div>
+            </div>
+
+            <!-- График 3: Линейный график -->
+            <div class="column">
+              <div class="box">
+                  <h2 class="subtitle">Продуктивность</h2>
+                  <canvas id="lineChart"></canvas>
+              </div>
+          
+            </div>
+
+        </div>
         <nav class="level pt-6">
               <div class="level-item has-text-centered">
                 <div>
@@ -33,28 +63,7 @@
         </nav> 
 
         <div class="columns">
-
-            <!-- График 1: Круговая диаграмма -->
-            <div class="column">
-                <div class="box">
-                    <h2 class="subtitle">Статус задач</h2>
-                    <canvas id="pieChart"></canvas>
-                </div>
-            </div>
-
-            <!-- График 2: Гистограмма -->
-            <div class="column">
-            <div class="box">
-                <h2 class="subtitle">Задачи по дням недели</h2>
-                <canvas id="barChart"></canvas>
-            </div></div>
-
-            <!-- График 3: Линейный график -->
-            <div class="column">
-            <div class="box">
-                <h2 class="subtitle">Продуктивность</h2>
-                <canvas id="lineChart"></canvas>
-            </div>
+          <div class="column">
             <div class="box">
                 <h2 class="subtitle">Типовые задачи</h2>
                 <p> Верстка страницы 3ч </p>
@@ -62,8 +71,9 @@
                 <p> Верстка страницы 3ч </p>
                 <p> Верстка страницы 3ч </p>
             </div>
-            </div>
-
+          </div>
+          <div class="column"></div>
+          <div class="column"></div>
         </div>
         
     </section>
@@ -82,7 +92,7 @@
       options: {
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' }
+          legend: { position: 'right' }
         }
       }
     });

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
 from .models import User
+from .utils import generate_avatar_image
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -33,7 +34,7 @@ class CustomUserCreationForm(UserCreationForm):
                 if field_name == 'password1' else 'Повторите пароль'
             })
 
-        
+
 class CustomLoginForm(AuthenticationForm):
     username = forms.CharField(
         widget=forms.TextInput(

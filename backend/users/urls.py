@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
-from .views import CustomPasswordChangeView
+from .views import CustomPasswordChangeView, UserListView
+
 
 print('work2')
 urlpatterns = [
@@ -19,5 +20,10 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('settings/', views.settings, name='settings'),
     path('password/', CustomPasswordChangeView.as_view(), name='password_change'),
+
+    # подписки
+    path('follow/<int:user_id>/', views.follow_user, name='follow_user'),
+    path('unfollow/<int:user_id>/', views.unfollow_user, name='unfollow_user'),
+    path('user_list/', UserListView.as_view(), name='user_list'),
 
 ]

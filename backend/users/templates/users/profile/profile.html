@@ -183,7 +183,14 @@
                 <div class="column is-flex-desktop-only ">
 
                     <div class="field">
-                        <label class="label">Друзья</label>                        
+                                             
+
+                        <label class="label">Подписки</label>
+                        {% include "users/profile/popup/user_list_profile.html" with users=following %}
+
+                        <label class="label">Ждёт подписки</label>
+                        {% include "users/profile/popup/user_list_profile.html" with users=one_way_followers %}
+
                     </div>
 
                     <div class="field">

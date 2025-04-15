@@ -1,0 +1,320 @@
+{% extends 'users/base.html' %}
+
+{% block title %}Задачи{% endblock %}
+
+{% block content %}
+    <style type="text/css">
+      .name_task{
+        display: block;
+        max-height: 20px;
+        max-width: 200px;
+        overflow: hidden;
+      }
+    </style>
+
+    <!-- модальное окно -->
+    <div id="modal-js-example" class="modal">
+      <div class="modal-background"></div>
+
+      <div class="modal-content">
+        <div class="box">
+          {% include "tasks/create_task.html" %}
+          <!-- Your content -->
+        </div>
+      </div>
+
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+
+    <!-- Основное содержимое -->
+
+    <section class="hero has-background-light ">
+        <div class="container is-fluid ">
+
+            <div class="field pt-3 pd-3 has-text-grey-light">
+              <span class="icon-text">
+                <span class="icon">
+                  <ion-icon name="home-outline"></ion-icon>
+                </span>
+                <span class="name_task">Выучить Python</span>
+                <span class="icon">
+                  <ion-icon name="chevron-forward-outline"></ion-icon>
+                </span>
+                <span class="name_task">Осввоить фреймворк</span>
+                <span class="icon">
+                  <ion-icon name="chevron-forward-outline"></ion-icon>
+                </span>
+                <span class="name_task">Django</span>
+                <span class="icon">
+                  <ion-icon name="chevron-forward-outline"></ion-icon>
+                </span>
+                <span class="name_task">Задачник</span>
+                <span class="icon">
+                  <ion-icon name="chevron-forward-outline"></ion-icon>
+                </span>
+                <span class="name_task">Очень длинное название задачи для примера чтобы посмотреть как будет работать перенос строки</span>
+                <span class="icon">
+                  <ion-icon name="flag-outline"></ion-icon>
+                </span>
+              </span>
+            </div>
+
+            <div class="columns is-fullheight pt-3">
+
+                <!-- Описание задачи -->
+                <div class="column is-4">
+                    <h2>от 06.04.25</h2>
+                    <h1 class="title">Очень длинное название задачи для примера чтобы посмотреть как будет работать перенос строки</h1>
+
+
+                    <div class="field">
+                      <label class="label">Описание</label>
+                      <div class="control">
+                        <textarea class="textarea" placeholder="... Описание задачи"></textarea>
+                      </div>
+                      <button class="button is-primary mt-3">Сохранить</button>
+                    </div>
+
+                    <div class="field">
+                      <label class="label">Комментарии</label>
+                      <div class="box">
+                        <article class="media">
+                          <div class="media-left">
+                            <figure class="image is-64x64">
+                              <img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="Image" />
+                            </figure>
+                          </div>
+                          <div class="media-content">
+                            <div class="content">
+                              <p>
+                                <strong>Егор Кукольщиков</strong> <small>@pic</small>
+                                <small>31m</small>
+                                <br />
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                efficitur sit amet massa fringilla egestas. Nullam condimentum luctus
+                                turpis.
+                              </p>
+                            </div>
+                            <nav class="level is-mobile">
+                              <div class="level-left">
+                                <a class="level-item" aria-label="reply">
+                                  <span class="icon is-small">
+                                    <i class="fas fa-reply" aria-hidden="true"></i>
+                                  </span>
+                                </a>
+                                <a class="level-item" aria-label="retweet">
+                                  <span class="icon is-small">
+                                    <i class="fas fa-retweet" aria-hidden="true"></i>
+                                  </span>
+                                </a>
+                                <a class="level-item" aria-label="like">
+                                  <span class="icon is-small">
+                                    <i class="fas fa-heart" aria-hidden="true"></i>
+                                  </span>
+                                </a>
+                              </div>
+                            </nav>
+                          </div>
+                        </article>
+                      </div>
+
+                      <div class="field">
+                        <label class="label">Оставить комментарий</label>
+                        <div class="control">
+                          <textarea class="textarea" placeholder="... Комментарий"></textarea>
+                        </div>
+                      </div>
+
+                      <div class="field">
+
+                         <div class="file has-name is-right">
+                          <label class="file-label">
+                            <input class="file-input" type="file" name="resume" />
+                            <span class="file-cta">
+                              <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                              </span>
+                              <span class="file-label"> Choose a file… </span>
+                            </span>
+                            <span class="file-name"> Screen Shot 2017-07-29 at 15.54.25.png </span>
+                          </label>
+                        </div>
+
+                      </div>
+
+                    <div class="field">
+                        <button class="button is-primary ">Оставить комментарий</button> 
+                    </div>
+                      
+                  </div>
+
+                </div>
+
+                <!-- Под задачи -->
+                <div class="column is-5 has-background-white">
+                    <div class="column has-text-centered ">
+                      <button class="js-modal-trigger button is-primary" data-target="modal-js-example">
+                        <span class="icon"> 
+                          <ion-icon name="add-circle-outline"></ion-icon>
+                        </span> 
+                        <span>Новая задача</span>
+                      </button>
+                    </div>
+                    <table class="table is-fullwidth">
+                      <thead>
+                        <tr>
+                          <th><abbr title="Position">N</abbr></th>
+                          <th>Задача</th>
+                          <th><abbr title="Played">Срок</abbr></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                         
+                        {% for task in tasks %}
+                          {% if task.status.name == "Завершено" %}
+                            <tr class="has-text-grey-light has-background-light">
+                          {% else %}
+                            {% if task.is_overdue %}
+                              <tr class="has-text-grey-light has-background-danger-light">
+                            {% else %}
+                              <tr >
+                            {% endif %} 
+                          {% endif %} 
+
+                            <th>{{ task.id }}</th>
+
+                            <td>
+                              {% if task.status.name != "Завершено" %}
+                                <a href="">
+                                  {{ task.title }} 
+                                </a>
+                              {% else %}
+                                <a href="" class="has-text-grey-light">
+                                  {{ task.title }} 
+                                </a>
+                              {% endif %}
+                            </td>
+
+                            <td>
+                              {% if task.deadline %}
+                                <p>до {{ task.deadline|date:"d.m.Y H:i" }}</p>
+                              {% else %}
+                                <p>без срочный</p>
+                              {% endif %}
+                              <p><small>от {{ task.created_at }}</small></p>
+                            </td>
+
+                            
+                            <td>
+                              {% if task.status.name != "Завершено" %}
+                                  <button 
+                                    href="{% url 'edit_task' task.id %}" 
+                                    class="button js-modal-edit" 
+                                    data-target="modal-js-example"
+                                    data-title="{{ task.title }}"
+                                    data-deadline='{{ task.deadline|date:"Y-m-d H:i" }}'
+                                    >
+                                    <span class="icon">
+                                      <ion-icon name="settings-outline"></ion-icon>
+                                    </span>
+                                  </button>                                  
+                                  <a href="{% url 'complete_task' task.id 2 %}" class="button is-primary">
+                                     <span class="icon">
+                                      <ion-icon name="checkmark-circle-outline"></ion-icon>
+                                    </span>
+                                  </a>
+                                
+                              {% else %}
+                                <a href="{% url 'complete_task' task.id 0 %}" class="button">
+                                  <span class="icon">
+                                    <ion-icon name="sync-outline"></ion-icon>
+                                  </span>
+                                </a>
+
+                                <a href="{% url 'del_task' task.id %}" class="button is-danger">
+                                   <span class="icon">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                  </span>
+                                </a>
+                              {% endif %}
+                            </td>
+                          </tr>
+
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <div class="column has-text-centered">
+                      <button class="js-modal-trigger button is-primary" data-target="modal-js-example">
+                        <span class="icon"> 
+                          <ion-icon name="add-circle-outline"></ion-icon>
+                        </span> 
+                        <span>Новая задача</span>
+                      </button>
+                    </div>
+
+                </div>
+
+                <!-- Настройки -->
+                <div class="column is-flex-desktop-only">
+                  <h1 class="title">Настройки</h1>
+
+                  <div class="field">
+                    <label class="label">Крайний срок</label>
+                    <div class="control has-icons-right">
+                      <input class="input" type="text" placeholder="Text input">
+                      <span class="icon is-small is-right">
+                        <ion-icon name="calendar-number-outline"></ion-icon>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label">Исполнители</label>
+                    <div class="control has-icons-right">
+                      <input class="input" type="text" placeholder="Text input">
+                      <span class="icon is-small is-right">
+                        <ion-icon name="person-add-outline"></ion-icon>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                      <label class="label">Теги</label>
+                      <div class="control">
+                        <textarea class="textarea" placeholder=""></textarea>
+                      </div>                      
+                  </div>
+
+                  <div class="field">
+                    <label class="label">Тип задачи</label>
+                    <div class="select">
+                      <select>
+                        <option>Стандарт</option>
+                        <option>Покупки</option>
+                        <option>Тренировка</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label">Повторы</label>
+                    <div class="select">
+                      <select>
+                        <option>нет</option>
+                        <option>неделя</option>
+                        <option>месяц</option>
+                        <option>год</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <button class="button is-primary mt-3">Сохранить</button>
+
+                </div>
+
+              </div>
+        </div>
+    </section>
+{% endblock %}
