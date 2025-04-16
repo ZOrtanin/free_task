@@ -37,6 +37,19 @@ class Task(models.Model):
         related_name='tasks'
     )
 
+    shared_with = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, 
+        blank=True, 
+        related_name='shared_tasks')
+
+    def get_breadcrumbs(self):
+        task = self
+        breadcrumbs = []
+        while task.parent:
+            breadcrumbs.insert(0, task.parent)
+            task = task.parent
+        return breadcrumbs
+
     def is_overdue(self):
         return self.deadline and self.deadline < timezone.now()
 

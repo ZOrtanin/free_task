@@ -31,52 +31,291 @@
 
     <section class="hero has-background-light ">
         <div class="container is-fluid ">
-
+            <!-- Хлебные крошки -->
             <div class="field pt-3 pd-3 has-text-grey-light">
               <span class="icon-text">
-                <span class="icon">
-                  <ion-icon name="home-outline"></ion-icon>
-                </span>
-                <span class="name_task">Выучить Python</span>
-                <span class="icon">
-                  <ion-icon name="chevron-forward-outline"></ion-icon>
-                </span>
-                <span class="name_task">Осввоить фреймворк</span>
-                <span class="icon">
-                  <ion-icon name="chevron-forward-outline"></ion-icon>
-                </span>
-                <span class="name_task">Django</span>
-                <span class="icon">
-                  <ion-icon name="chevron-forward-outline"></ion-icon>
-                </span>
-                <span class="name_task">Задачник</span>
-                <span class="icon">
-                  <ion-icon name="chevron-forward-outline"></ion-icon>
-                </span>
-                <span class="name_task">Очень длинное название задачи для примера чтобы посмотреть как будет работать перенос строки</span>
-                <span class="icon">
-                  <ion-icon name="flag-outline"></ion-icon>
-                </span>
+                {% if parent_task %}
+                  <span class="icon">
+                    <ion-icon name="home-outline"></ion-icon>
+                  </span>
+                  <span class="name_task">               
+                    <a href="{% url 'task_list' %}">Все задачи</a>
+                  </span>
+                {% endif %}
+
+                {% if breadcrumbs %}
+                  
+                    {% for mytask in breadcrumbs %}                      
+                      <span class="icon">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                      </span> 
+                      <span class="name_task">
+                        <a href="{% url 'task_list_child' mytask.id %}">{{ mytask.title }}</a>
+                      </span>
+                    {% endfor %}
+                    
+                {% endif %}
+
+                {% if parent_task %}
+                      <span class="icon">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                      </span> 
+                      <span class="name_task">
+                        <strong>{{ parent_task.title }}</strong>  
+                      </span>                 
+                  
+                  <span class="icon">
+                    <ion-icon name="flag-outline"></ion-icon>
+                  </span>
+                {% endif %}
+               
               </span>
             </div>
 
             <div class="columns is-fullheight pt-3">
 
                 <!-- Описание задачи -->
-                <div class="column is-4">
-                    <h2>от 06.04.25</h2>
-                    <h1 class="title">Очень длинное название задачи для примера чтобы посмотреть как будет работать перенос строки</h1>
+                {% if parent_task %}
+                  <div class="column is-3">
+                    <h2>от {{ parent_task.created_at }}</h2>
+                    <h1 class="title">{{ parent_task.title }}</h1>
 
+                    <form method="post" action="{% url 'edit_parent_task' parent_task.id %}">
 
-                    <div class="field">
-                      <label class="label">Описание</label>
-                      <div class="control">
-                        <textarea class="textarea" placeholder="... Описание задачи"></textarea>
+                      
+                      {% csrf_token %}
+
+                      <!-- Крайний срок -->                    
+                      <div class="field">
+                        <label class="label" for="id_deadline">Крайний срок</label>
+                        <div class="control has-icons-right">
+                        <input 
+                        type="datetime-local" 
+                        name="deadline" 
+                        class="input" 
+                        id="id_deadline"                      
+                        value='{{ parent_task.deadline|date:"Y-m-d\\TH:i" }}'
+                        >                     
+                          <span class="icon is-small is-right">
+                            <ion-icon name="calendar-number-outline" role="img" class="md hydrated"></ion-icon>
+                          </span>                      
+                        </div>
                       </div>
-                      <button class="button is-primary mt-3">Сохранить</button>
-                    </div>
 
-                    <div class="field">
+                      <!-- Описание -->
+                      <div class="field">
+                        <label class="label">Описание</label>
+                        <div class="control">
+                          <textarea name="description" class="textarea" placeholder="... Описание задачи">{{ parent_task.description }}</textarea>
+                        </div>                      
+                      </div>
+
+                      <!-- Исполнители -->
+                      <div class="field">
+                        <label class="label">Исполнители</label>
+                        <div class="control">
+                          <div class="tags are-medium">
+                            {% for user in parent_task.shared_with.all %}
+                              <span class="tag is-primary">@{{ user.username }}</span>
+                            {% empty %}
+                              Никто, кроме автора
+                            {% endfor %}
+                            <a><span class="tag">+ Добавить</span></a>
+                          </div>
+                        </div>
+                        <!-- <div class="control has-icons-right">
+                          <input class="input" type="text" placeholder="Text input">
+                          <span class="icon is-small is-right">
+                            <ion-icon name="person-add-outline"></ion-icon>
+                          </span>
+                        </div> -->
+                      </div>
+
+                      <!-- Теги -->
+                      <div class="field">
+                          <label class="label">Теги</label>
+                          <div class="control">
+                            <textarea class="textarea" placeholder=""></textarea>
+                          </div>                      
+                      </div>
+
+                      <!-- Тип задачи -->
+                      <div class="field">
+                        <label class="label">Тип задачи</label>
+                        <div class="select">
+                          <select>
+                            <option>Стандарт</option>
+                            <option>Покупки</option>
+                            <option>Тренировка</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <!-- Повторы -->
+                      <div class="field">
+                        <label class="label">Повторы</label>
+                        <div class="select">
+                          <select>
+                            <option>нет</option>
+                            <option>неделя</option>
+                            <option>месяц</option>
+                            <option>год</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <button class="button is-primary mt-3" type="submit">Сохранить</button>
+
+                    </form>
+
+                  </div>
+                {% else %}
+                  <div class="column is-3">
+                    <section class="hero is-fullheight">
+                      <div class="hero-head"></div>
+                      <div class="hero-body">
+                        <div class="column has-text-centered ">
+                          <button class="js-modal-trigger button is-primary" data-target="modal-js-example">
+                            <span class="icon"> 
+                              <ion-icon name="add-circle-outline"></ion-icon>
+                            </span> 
+                            <span>Новая задача</span>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="hero-foot"></div>
+
+                    </section>
+                  </div>
+                {% endif %}
+
+                <!-- Под задачи -->
+                <div class="column is-5 has-background-white">
+                    {% if parent_task %}
+                      <div class="column has-text-centered ">
+                        <button class="js-modal-trigger button is-primary" data-target="modal-js-example">
+                          <span class="icon"> 
+                            <ion-icon name="add-circle-outline"></ion-icon>
+                          </span> 
+                          <span>Новая задача</span>
+                        </button>
+                      </div>
+                    {% endif %}
+                    <table class="table is-fullwidth">
+                      <thead>
+                        <tr>
+                          <th><abbr title="Position">N</abbr></th>
+                          <th>Задача</th>
+                          <th><abbr title="Played">Срок</abbr></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                         
+                        {% for task in tasks %}
+                          {% if task.status.name == "Завершено" %}
+                            <tr class="has-text-grey-light has-background-light">
+                          {% else %}
+                            {% if task.is_overdue %}
+                              <tr class="has-text-grey-light has-background-danger-light">
+                            {% else %}
+                              <tr >
+                            {% endif %} 
+                          {% endif %} 
+
+                            <th>{{ task.id }}</th>
+
+                            <td>
+                              {% if task.parent != None  %}
+                              <span class="icon">
+                                <ion-icon name="albums-outline"></ion-icon>
+                              </span>
+                              {% endif %}
+                              {% if task.status.name != "Завершено" %}
+                                <a href="{% url 'task_list_child' task.id %}">
+                                  {{ task.title }} 
+                                </a>
+                              {% else %}
+                                
+                                <a href="{% url 'task_list_child' task.id %}" class="has-text-grey-light">
+                                  {{ task.title }} 
+                                </a>
+                              {% endif %}
+                            </td>
+
+                            <td>
+                              {% if task.deadline %}
+                                <p>до {{ task.deadline|date:"d.m.Y H:i" }}</p>
+                              {% else %}
+                                <p>без срочный</p>
+                              {% endif %}
+                              <p><small>от {{ task.created_at }}</small></p>
+                            </td>
+
+                            
+                            <td>
+                              {% if task.status.name != "Завершено" %}
+                                  <button 
+                                    href="{% url 'edit_task' task.id %}" 
+                                    class="button js-modal-edit" 
+                                    data-target="modal-js-example"
+                                    data-title="{{ task.title }}"
+                                    data-deadline='{{ task.deadline|date:"Y-m-d H:i" }}'
+                                    >
+                                    <span class="icon">
+                                      <ion-icon name="settings-outline"></ion-icon>
+                                    </span>
+                                  </button>                                  
+                                  <a href="{% url 'complete_task' task.id 2 %}" class="button is-primary">
+                                     <span class="icon">
+                                      <ion-icon name="checkmark-circle-outline"></ion-icon>
+                                    </span>
+                                  </a>
+                                
+                              {% else %}
+                                <a href="{% url 'complete_task' task.id 0 %}" class="button">
+                                  <span class="icon">
+                                    <ion-icon name="sync-outline"></ion-icon>
+                                  </span>
+                                </a>
+
+                                <a href="{% url 'del_task' task.id %}" class="button is-danger">
+                                   <span class="icon">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                  </span>
+                                </a>
+                              {% endif %}
+                            </td>
+                          </tr>
+
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    {% if parent_task %}
+                      <div class="column has-text-centered ">
+                        <button class="js-modal-trigger button is-primary" data-target="modal-js-example">
+                          <span class="icon"> 
+                            <ion-icon name="add-circle-outline"></ion-icon>
+                          </span> 
+                          <span>Новая задача</span>
+                        </button>
+                      </div>
+                    {% endif %}
+
+                </div>
+
+                <!-- Настройки -->
+                <div class="column is-flex-desktop-only">
+
+                  <div class="field">
+                      <label class="label">История</label>
+                  </div> 
+                  
+                  <div class="field">
+                      <label class="label">Файлы</label>
+                  </div>                  
+
+                  <div class="field">
                       <label class="label">Комментарии</label>
                       <div class="box">
                         <article class="media">
@@ -148,169 +387,6 @@
                     </div>
                       
                   </div>
-
-                </div>
-
-                <!-- Под задачи -->
-                <div class="column is-5 has-background-white">
-                    <div class="column has-text-centered ">
-                      <button class="js-modal-trigger button is-primary" data-target="modal-js-example">
-                        <span class="icon"> 
-                          <ion-icon name="add-circle-outline"></ion-icon>
-                        </span> 
-                        <span>Новая задача</span>
-                      </button>
-                    </div>
-                    <table class="table is-fullwidth">
-                      <thead>
-                        <tr>
-                          <th><abbr title="Position">N</abbr></th>
-                          <th>Задача</th>
-                          <th><abbr title="Played">Срок</abbr></th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                         
-                        {% for task in tasks %}
-                          {% if task.status.name == "Завершено" %}
-                            <tr class="has-text-grey-light has-background-light">
-                          {% else %}
-                            {% if task.is_overdue %}
-                              <tr class="has-text-grey-light has-background-danger-light">
-                            {% else %}
-                              <tr >
-                            {% endif %} 
-                          {% endif %} 
-
-                            <th>{{ task.id }}</th>
-
-                            <td>
-                              {% if task.status.name != "Завершено" %}
-                                <a href="">
-                                  {{ task.title }} 
-                                </a>
-                              {% else %}
-                                <a href="" class="has-text-grey-light">
-                                  {{ task.title }} 
-                                </a>
-                              {% endif %}
-                            </td>
-
-                            <td>
-                              {% if task.deadline %}
-                                <p>до {{ task.deadline|date:"d.m.Y H:i" }}</p>
-                              {% else %}
-                                <p>без срочный</p>
-                              {% endif %}
-                              <p><small>от {{ task.created_at }}</small></p>
-                            </td>
-
-                            
-                            <td>
-                              {% if task.status.name != "Завершено" %}
-                                  <button 
-                                    href="{% url 'edit_task' task.id %}" 
-                                    class="button js-modal-edit" 
-                                    data-target="modal-js-example"
-                                    data-title="{{ task.title }}"
-                                    data-deadline='{{ task.deadline|date:"Y-m-d H:i" }}'
-                                    >
-                                    <span class="icon">
-                                      <ion-icon name="settings-outline"></ion-icon>
-                                    </span>
-                                  </button>                                  
-                                  <a href="{% url 'complete_task' task.id 2 %}" class="button is-primary">
-                                     <span class="icon">
-                                      <ion-icon name="checkmark-circle-outline"></ion-icon>
-                                    </span>
-                                  </a>
-                                
-                              {% else %}
-                                <a href="{% url 'complete_task' task.id 0 %}" class="button">
-                                  <span class="icon">
-                                    <ion-icon name="sync-outline"></ion-icon>
-                                  </span>
-                                </a>
-
-                                <a href="{% url 'del_task' task.id %}" class="button is-danger">
-                                   <span class="icon">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                  </span>
-                                </a>
-                              {% endif %}
-                            </td>
-                          </tr>
-
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                    <div class="column has-text-centered">
-                      <button class="js-modal-trigger button is-primary" data-target="modal-js-example">
-                        <span class="icon"> 
-                          <ion-icon name="add-circle-outline"></ion-icon>
-                        </span> 
-                        <span>Новая задача</span>
-                      </button>
-                    </div>
-
-                </div>
-
-                <!-- Настройки -->
-                <div class="column is-flex-desktop-only">
-                  <h1 class="title">Настройки</h1>
-
-                  <div class="field">
-                    <label class="label">Крайний срок</label>
-                    <div class="control has-icons-right">
-                      <input class="input" type="text" placeholder="Text input">
-                      <span class="icon is-small is-right">
-                        <ion-icon name="calendar-number-outline"></ion-icon>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="field">
-                    <label class="label">Исполнители</label>
-                    <div class="control has-icons-right">
-                      <input class="input" type="text" placeholder="Text input">
-                      <span class="icon is-small is-right">
-                        <ion-icon name="person-add-outline"></ion-icon>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="field">
-                      <label class="label">Теги</label>
-                      <div class="control">
-                        <textarea class="textarea" placeholder=""></textarea>
-                      </div>                      
-                  </div>
-
-                  <div class="field">
-                    <label class="label">Тип задачи</label>
-                    <div class="select">
-                      <select>
-                        <option>Стандарт</option>
-                        <option>Покупки</option>
-                        <option>Тренировка</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="field">
-                    <label class="label">Повторы</label>
-                    <div class="select">
-                      <select>
-                        <option>нет</option>
-                        <option>неделя</option>
-                        <option>месяц</option>
-                        <option>год</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <button class="button is-primary mt-3">Сохранить</button>
 
                 </div>
 
