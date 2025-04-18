@@ -12,13 +12,27 @@
       }
     </style>
 
-    <!-- модальное окно -->
+    <!-- модальное окно задачи -->
     <div id="modal-js-example" class="modal">
       <div class="modal-background"></div>
 
       <div class="modal-content">
         <div class="box">
           {% include "tasks/create_task.html" %}
+          <!-- Your content -->
+        </div>
+      </div>
+
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+    <!-- модальное окно задачи -->
+    <div id="modal-js-users" class="modal">
+      <div class="modal-background"></div>
+
+      <div class="modal-content">
+        <div class="box">
+          {% include "users/profile/popup/user_list_add.html" %}
           <!-- Your content -->
         </div>
       </div>
@@ -116,11 +130,22 @@
                         <div class="control">
                           <div class="tags are-medium">
                             {% for user in parent_task.shared_with.all %}
-                              <span class="tag is-primary">@{{ user.username }}</span>
+                              <span class="tag is-primary">
+                                @{{ user.username }}
+                                <a href="{% url 'del_user_task' parent_task.id  %}" class="delete is-small"></a>
+                              </span>
                             {% empty %}
-                              Никто, кроме автора
+                              <!-- Никто, кроме автора -->
                             {% endfor %}
-                            <a><span class="tag">+ Добавить</span></a>
+                            <!-- <button class="js-modal-trigger button is-primary" data-target="modal-js"> -->
+                            <!-- <button class="js-modal-trigger button is-primary" data-target="modal-js-users">+ Добавить</button> -->
+                            <a class="js-modal-trigger button is-light" data-target="modal-js-users">
+                              <span class="icon"> 
+                                <ion-icon name="add-circle-outline"></ion-icon>
+                              </span> 
+                              <span>Добавить</span>
+                            </a>
+
                           </div>
                         </div>
                         <!-- <div class="control has-icons-right">

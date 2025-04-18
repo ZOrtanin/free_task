@@ -5,9 +5,13 @@ from .models import Task, TaskStatus
 from django.db.models import Case, When, IntegerField
 from django.db.models import Q
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 
 @login_required
 def task_list(request, task_id=None):
+    users = User.objects.exclude(id=request.user.id)
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -40,6 +44,7 @@ def task_list(request, task_id=None):
         parent_form = ParentTaskForm()
 
         context = {
+            'users': users,
             'parent_task': parent_task,
             'breadcrumbs': breadcrumbs,
             'tasks': children,
@@ -107,6 +112,7 @@ def edit_task(request, task_id):
         form.save()
     return redirect('task_list')
 
+
 @login_required
 def edit_parent_task(request, task_id):
     task = get_object_or_404(Task, id=task_id, author=request.user)
@@ -115,8 +121,18 @@ def edit_parent_task(request, task_id):
         form.save()
     return redirect('task_list_child', task_id=task_id)
 
+
 @login_required
 def del_task(request, task_id):
     task = get_object_or_404(Task, id=task_id, author=request.user)
     task.delete()
     return redirect('task_list')
+
+
+@login_required
+def share_task(request, task_id, user_id):
+    task = get_object_or_404(Task, id=task_id, author=request.user)
+    user = get_object_or_404(User, id=user_id)
+    print(task_id, user_id)
+    task.shared_with.add(user)
+    return redirect('task_list_child', task_id=task.id)

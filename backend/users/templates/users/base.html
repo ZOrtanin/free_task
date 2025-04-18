@@ -19,25 +19,28 @@
       document.addEventListener('DOMContentLoaded', () => {
         
         function clearModal($el){
-          // заголовок
-            $el.querySelector('h1').innerHTML ='Создать задачу';
+            console.log($el.id)
+            
+              // заголовок
+              $el.querySelector('h1').innerHTML ='Создать задачу';
 
-            $el.querySelectorAll('input').forEach(item => {
+              $el.querySelectorAll('input').forEach(item => {
 
-              // название задачи
-              if (item.name == 'title'){
-                item.value = '';
-              }
+                // название задачи
+                if (item.name == 'title'){
+                  item.value = '';
+                }
 
-              // крайний срок
-              if (item.name == 'deadline'){                
-                item.value = '';
-              }
+                // крайний срок
+                if (item.name == 'deadline'){                
+                  item.value = '';
+                }
 
-            });
+              });
 
-            // форма
-            $el.querySelector('form').action = '';
+              // форма
+              $el.querySelector('form').action = '';
+
         }
 
         // Functions to open and close a modal
@@ -46,8 +49,10 @@
         }
 
         function closeModal($el) {
-          console.log($el);
-          clearModal($el);
+          
+          if($el.id == "modal-js-example"){
+            clearModal($el);
+          }
           $el.classList.remove('is-active');
         }
 
@@ -120,8 +125,6 @@
 
           });
         });
-
-
 
       });
     </script>

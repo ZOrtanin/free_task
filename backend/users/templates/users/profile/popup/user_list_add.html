@@ -1,0 +1,25 @@
+<h3 class="title">Список пользователей</h3>
+
+  {% for user in users %}
+    <div class="box">
+      <article class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <!-- <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" /> -->
+            <img class="is-rounded" src="/media/{{user.avatar }}" />
+          </figure>
+        </div>
+        <div class="media-content">
+          <strong>@{{ user.username }}</strong>
+          <p>{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</p>
+        </div>
+        <div class="media-right">     
+          <form method="post" action="{% url 'share_task' parent_task.id user.id %}">
+            {% csrf_token %}
+            <button class="button is-primary" type="submit">Добавить</button>
+          </form>
+        </div>
+        
+      </article>
+    </div>
+  {% endfor %}

@@ -12,4 +12,5 @@ urlpatterns = [
     path('<int:task_id>/edit/', views.edit_task, name='edit_task'),
     path('<int:task_id>/edit_parent/', views.edit_parent_task, name='edit_parent_task'),
     path('tasks/<int:task_id>/del/', views.del_task, name='del_task'),
+    path('tasks/<int:task_id>/share/<int:user_id>/', views.share_task, name='share_task'),
 ]
