@@ -2,3 +2,4 @@
 /backend/config/__pycache__
 /backend/config/__pycache__
 *.pyc
+/backend/users/__pycache__

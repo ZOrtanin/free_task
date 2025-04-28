@@ -72,17 +72,30 @@ def dashboard_view(request):
     followers = Follow.objects.filter(following=user).select_related('follower').count()
     following = Follow.objects.filter(follower=user).select_related('following').count()
 
-    context = {
-        'last_tasks': tasks.order_by('-created_at')[:7],
-        'run_tasks': tasks.filter(updated_at__lt=now)[:7],
-        'old_tasks': tasks.filter(updated_at__lt=month_ago)[:7],
-        'end_task': tasks.filter(status_id=2).order_by('updated_at').reverse()[:7],
-        'end_task_count': tasks.filter(status_id=2).count(),
-        'count_task': tasks.count(),       
-        'followers': followers,
-        'following': following,
+    if tasks == []:
+        context = {
+            'last_tasks': None,
+            'run_tasks': None,
+            'old_tasks': None,
+            'end_task': None,
+            'end_task_count': None,
+            'count_task': None,       
+            'followers': None,
+            'following': None,
 
-    }
+        }
+    else:
+        context = {
+            'last_tasks': tasks.order_by('-created_at')[:7],
+            'run_tasks': tasks.filter(updated_at__lt=now)[:7],
+            'old_tasks': tasks.filter(updated_at__lt=month_ago)[:7],
+            'end_task': tasks.filter(status_id=2).order_by('updated_at').reverse()[:7],
+            'end_task_count': tasks.filter(status_id=2).count(),
+            'count_task': tasks.count(),       
+            'followers': followers,
+            'following': following,
+
+        }
 
     return render(request, 'users/dashboard.html', context)
 
