@@ -18,6 +18,8 @@ urlpatterns = [
     path('statistics/', views.statistics_view, name='statistics'),
 
     path('profile/', views.profile, name='profile'),
+    path('profile_user/<str:user_name>/', views.user_page, name='user_page'),
+
     path('settings/', views.settings, name='settings'),
     path('password/', CustomPasswordChangeView.as_view(), name='password_change'),
 

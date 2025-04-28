@@ -42,6 +42,9 @@ class Task(models.Model):
         blank=True, 
         related_name='shared_tasks')
 
+    position = models.PositiveIntegerField(
+        default=0)
+
     def get_breadcrumbs(self):
         task = self
         breadcrumbs = []

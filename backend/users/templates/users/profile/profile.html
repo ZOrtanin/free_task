@@ -188,9 +188,10 @@
                         <label class="label">Подписки</label>
                         {% include "users/profile/popup/user_list_profile.html" with users=following %}
 
-                        <label class="label">Ждёт подписки</label>
-                        {% include "users/profile/popup/user_list_profile.html" with users=one_way_followers %}
-
+                        {% if not user_page %}
+                            <label class="label">Ждёт подписки</label>
+                            {% include "users/profile/popup/user_list_profile.html" with users=one_way_followers %}
+                        {% endif %}
                     </div>
 
                     <div class="field">

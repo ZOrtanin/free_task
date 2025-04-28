@@ -11,9 +11,11 @@
           <!-- <button class="button is-small" type="submit">Отписаться</button> -->
             <button class="button is-light" type="submit">
                 <span>{{ user.username }}</span>
-                <span class="icon ">
-                    <ion-icon name="close-circle-outline"></ion-icon>
-                </span>
+                {% if not user_page %}
+                  <span class="icon ">
+                      <ion-icon name="close-circle-outline"></ion-icon>
+                  </span>
+                {% endif %}
                 
             </button>
         </form>

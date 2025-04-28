@@ -15,14 +15,54 @@
     >
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
     <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', () => {
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Строгое сравнение: "csrftoken="
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        new Sortable(document.getElementById('task-table'), {
+          animation: 150,
+          handle: 'td', // можно настроить, если хочешь тянуть за конкретный столбец
+          onEnd: function (evt) {
+            const order = [];
+            document.querySelectorAll('#task-table tr').forEach(row => {
+              order.push(row.id);
+            });
+
+            fetch('/tasks/tasks/reorder/', {
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({task_ids: order})
+            });
+          }
+        });
+
         
         function clearModal($el){
             console.log($el.id)
             
               // заголовок
               $el.querySelector('h1').innerHTML ='Создать задачу';
+              $el.querySelector('button').innerHTML ='Создать';
 
               $el.querySelectorAll('input').forEach(item => {
 
@@ -102,6 +142,7 @@
             console.log(url)
             // заголовок
             $target.querySelector('h1').innerHTML ='Редактирование задачи';
+            $target.querySelector('button').innerHTML ='Сохранить';
 
             $target.querySelectorAll('input').forEach(item => {
 
@@ -157,7 +198,7 @@
             <a href="{% url 'statistics' %}" class="navbar-item">
               
               <span class="icon-text">
-                <span>Публичные задачи</span>
+                <span>Найти задачу</span>
                 <span class="icon">
                   <ion-icon name="search-outline"></ion-icon>
                 </span>                
@@ -191,7 +232,9 @@
             </div>
 
             <div class="navbar-item">
-              <img class="is-rounded" src="/media/{{ request.user.avatar }}" alt="Image" />
+              <figure class="image is-24x24">
+                <img class="is-rounded" src="/media/{{ request.user.avatar }}" alt="Image" />
+              </figure>
             </div> 
           </div>
         </div>

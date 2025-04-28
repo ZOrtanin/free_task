@@ -9,10 +9,14 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from .utils import generate_avatar_image
 from .models import Follow
+from tasks.models import Task
+from django.db.models import Q
 
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from django.utils import timezone
+from datetime import timedelta
 
 # Create your views here.
 class CustomLoginView(LoginView):
@@ -54,7 +58,33 @@ def task_view(request):
 
 @login_required
 def dashboard_view(request):
-    return render(request, 'users/dashboard.html')
+
+    tasks = Task.objects.filter(
+        Q(author=request.user) | Q(shared_with=request.user),
+        parent__isnull=False
+        )
+
+    month_ago = timezone.now() - timedelta(days=4)
+    now = timezone.now() - timedelta(days=1)
+
+    user = get_object_or_404(User, username=request.user)
+
+    followers = Follow.objects.filter(following=user).select_related('follower').count()
+    following = Follow.objects.filter(follower=user).select_related('following').count()
+
+    context = {
+        'last_tasks': tasks.order_by('-created_at')[:7],
+        'run_tasks': tasks.filter(updated_at__lt=now)[:7],
+        'old_tasks': tasks.filter(updated_at__lt=month_ago)[:7],
+        'end_task': tasks.filter(status_id=2).order_by('updated_at').reverse()[:7],
+        'end_task_count': tasks.filter(status_id=2).count(),
+        'count_task': tasks.count(),       
+        'followers': followers,
+        'following': following,
+
+    }
+
+    return render(request, 'users/dashboard.html', context)
 
 
 @login_required
@@ -65,6 +95,35 @@ def schedule_view(request):
 @login_required
 def statistics_view(request):
     return render(request, 'users/statistics.html')
+
+
+def user_page(request, user_name):
+
+    user = get_object_or_404(User, username=user_name)
+    
+    # Все, кто следят за user
+    followers_qs = Follow.objects.filter(following=user).select_related('follower')
+    followers = [f.follower for f in followers_qs]
+
+    # Все, за кем следит user
+    following_qs = Follow.objects.filter(follower=user).select_related('following')
+    following = [f.following for f in following_qs]
+
+    # Только те, кто следят за пользователем
+    one_way_followers = [user for user in followers if user not in following]
+
+    following_ads = user.following.values_list('following_id', flat=True)
+
+    context = {
+        'user_page': True,
+        'profile_user': user,
+        'followers': followers,             # Все подписчики
+        'following': following,             # Все, за кем он следит        
+        'one_way_followers': one_way_followers,  # Односторонние подписки
+        'following_ads': list(following_ads),
+    }
+
+    return render(request, 'users/profile/profile.html', context)
 
 
 @login_required

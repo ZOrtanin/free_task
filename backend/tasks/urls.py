@@ -12,5 +12,14 @@ urlpatterns = [
     path('<int:task_id>/edit/', views.edit_task, name='edit_task'),
     path('<int:task_id>/edit_parent/', views.edit_parent_task, name='edit_parent_task'),
     path('tasks/<int:task_id>/del/', views.del_task, name='del_task'),
+    
+    # шаринг задачь
     path('tasks/<int:task_id>/share/<int:user_id>/', views.share_task, name='share_task'),
+    path('tasks/<int:task_id>/unshare/<int:user_id>/', views.unshare_task, name='unshare_task'),
+
+    # сохранение сортировки
+    path('tasks/reorder/', views.reorder_tasks, name='reorder_tasks'),
+
+    # Урлы для помощи
+    path('form-help/parent/<int:task_id>', views.parent_form_view, name='help-parentform'),
 ]

@@ -15,26 +15,26 @@
             <nav class="level pt-6">
               <div class="level-item has-text-centered">
                 <div>
-                  <p class="heading">Tweets</p>
-                  <p class="title">3,456</p>
+                  <p class="heading">Всего задач</p>
+                  <p class="title">{{ count_task }}</p>
                 </div>
               </div>
               <div class="level-item has-text-centered">
                 <div>
-                  <p class="heading">Following</p>
-                  <p class="title">123</p>
+                  <p class="heading">Выполнено</p>
+                  <p class="title">{{ end_task_count }}</p>
                 </div>
               </div>
               <div class="level-item has-text-centered">
                 <div>
-                  <p class="heading">Followers</p>
-                  <p class="title">456K</p>
+                  <p class="heading">Подписок</p>
+                  <p class="title">{{ following }}</p>
                 </div>
               </div>
               <div class="level-item has-text-centered">
                 <div>
-                  <p class="heading">Likes</p>
-                  <p class="title">789</p>
+                  <p class="heading">Подписчиков</p>
+                  <p class="title">{{ followers }}</p>
                 </div>
               </div>
             </nav> 
@@ -42,15 +42,39 @@
             <div class="columns is-fullheight">
 
                 <div class="column ">
-                    <h1 class="title">Новые</h1>                    
+                    <h1 class="title">Новые</h1>
+                    {% for task in last_tasks %}
+                      <div class="box">
+                        <a href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
+                      </div>
+                    {% endfor %}                    
                 </div> 
 
                 <div class="column">
-                    <h1 class="title">Активные</h1>                    
+                    <h1 class="title">Активные</h1>
+                    {% for task in run_tasks %}
+                      <div class="box">
+                        <a href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
+                      </div>
+                  {% endfor %}                    
                 </div>
                 
                 <div class="column ">
                   <h1 class="title">Забытые</h1>
+                  {% for task in old_tasks %}
+                      <div class="box">
+                        <a href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
+                      </div>
+                  {% endfor %}
+                </div>
+
+                <div class="column ">
+                  <h1 class="title">Выполненые</h1>
+                  {% for task in end_task %}
+                      <div class="box has-background-white-bis">
+                        <a class="has-text-grey-light" href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
+                      </div>
+                  {% endfor %}
                 </div>
 
             </div>
