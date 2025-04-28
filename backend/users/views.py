@@ -74,14 +74,14 @@ def dashboard_view(request):
 
     if tasks == []:
         context = {
-            'last_tasks': None,
-            'run_tasks': None,
-            'old_tasks': None,
-            'end_task': None,
-            'end_task_count': None,
-            'count_task': None,       
-            'followers': None,
-            'following': None,
+            'last_tasks': False,
+            'run_tasks': False,
+            'old_tasks': False,
+            'end_task': False,
+            'end_task_count': False,
+            'count_task': False,       
+            'followers': False,
+            'following': False,
 
         }
     else:
