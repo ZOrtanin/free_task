@@ -43,38 +43,46 @@
 
                 <div class="column ">
                     <h1 class="title">Новые</h1>
-                    {% for task in last_tasks %}
-                      <div class="box">
-                        <a href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
-                      </div>
-                    {% endfor %}                    
+                    {% if last_tasks %}
+                      {% for task in last_tasks %}
+                        <div class="box">
+                          <a href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
+                        </div>
+                      {% endfor %}  
+                    {% endif %}                  
                 </div> 
 
                 <div class="column">
                     <h1 class="title">Активные</h1>
+                    {% if run_tasks %}
                     {% for task in run_tasks %}
                       <div class="box">
                         <a href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
                       </div>
-                  {% endfor %}                    
+                  {% endfor %} 
+                  {% endif %}                     
                 </div>
                 
                 <div class="column ">
                   <h1 class="title">Забытые</h1>
+                  {% if old_tasks %}
                   {% for task in old_tasks %}
                       <div class="box">
                         <a href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
                       </div>
                   {% endfor %}
+                  {% endif %}   
                 </div>
 
                 <div class="column ">
                   <h1 class="title">Выполненые</h1>
+                  {% if end_task %}
                   {% for task in end_task %}
                       <div class="box has-background-white-bis">
                         <a class="has-text-grey-light" href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
                       </div>
                   {% endfor %}
+                  {% endif %}
                 </div>
 
             </div>
