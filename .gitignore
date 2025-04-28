@@ -3,3 +3,5 @@
 /backend/tasks/__pycache__
 /backend/media
 *.pyc
+*.pyc
+/backend/config/__pycache__
