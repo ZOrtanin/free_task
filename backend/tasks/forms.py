@@ -27,22 +27,21 @@ class ParentTaskForm(forms.ModelForm):
             'deadline': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'input'}),
             
         }
-        print('work select 1')
+
+        # print('work select 1')
 
         def __init__(self, *args, **kwargs):
             # Передадим пользователя в форму
             user = kwargs.pop('user', None)  
-            current_task = kwargs.pop('current_task', None)
+            # current_task = kwargs.pop('current_task', None)
             super().__init__(*args, **kwargs)
-            
-            print('work select 2')
+
+            self.fields['parent'].required = False
             
             if user:
                 self.fields['parent'].queryset = Task.objects.filter(
                     author=user, 
                     parent__isnull=True
                     )
-                if current_task:
-                    print('work select 3 ')
-
-
+        #         if current_task:
+        #             print('work select 3 ')

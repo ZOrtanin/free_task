@@ -5,6 +5,8 @@ from .models import Task, TaskStatus
 from django.db.models import Case, When, IntegerField
 from django.db.models import Q
 
+from django.contrib import messages
+
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 import json
@@ -28,7 +30,7 @@ def parent_form_view(request, task_id=None):
 
 
 @login_required
-def task_list(request, task_id=None):
+def task_list(request, task_id=None, error=None):
     users = User.objects.exclude(id=request.user.id)
 
     if request.method == 'POST':
@@ -75,7 +77,8 @@ def task_list(request, task_id=None):
             'breadcrumbs': breadcrumbs,
             'tasks': children,
             'form': form,
-            'parent_form': parent_form,            
+            'parent_form': parent_form,
+            'errors': error,            
         }
 
     else:
@@ -101,7 +104,7 @@ def task_list(request, task_id=None):
         context = {
             'tasks': tasks,
             'form': form,
-           
+            'errors': error,
         }
     
     return render(request, 'tasks/task.html', context)
@@ -155,6 +158,7 @@ def complete_task(request, task_id, status_id, parent_task=None):
 def edit_task(request, task_id):
     task = get_object_or_404(Task, id=task_id, author=request.user)
     form = TaskForm(request.POST, instance=task)
+    
     if form.is_valid():
         form.save()
 
@@ -168,8 +172,14 @@ def edit_task(request, task_id):
 def edit_parent_task(request, task_id):
     task = get_object_or_404(Task, id=task_id, author=request.user)
     form = ParentTaskForm(request.POST, instance=task)
+    
     if form.is_valid():
         form.save()
+        return redirect('task_list_child', task_id=task_id)  
+
+    # for error in form.errors:
+    messages.error(request, f"{form.errors}")  
+
     return redirect('task_list_child', task_id=task_id)
 
 

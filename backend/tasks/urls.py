@@ -22,4 +22,5 @@ urlpatterns = [
 
     # Урлы для помощи
     path('form-help/parent/<int:task_id>', views.parent_form_view, name='help-parentform'),
+    # path('error/', views.error, name='error'),
 ]

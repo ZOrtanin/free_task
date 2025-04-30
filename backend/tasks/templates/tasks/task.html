@@ -86,6 +86,17 @@
               </span>
             </div>
 
+            <!-- Ошибки -->
+            <div>              
+              {% if messages %}
+                <ul class="messages">
+                  {% for message in messages %}
+                    <li>{{ message }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}              
+            </div>
+
             <div class="columns is-fullheight pt-3">
 
                 <!-- Описание задачи -->
@@ -193,7 +204,11 @@
                         <!-- Над задача -->
                           <div class="field">
                             <label class="label">Под задача</label>
-                            <input class="input"  type="" name="parent" id="id_parent" value="{{ parent_task.parent_id }}">
+                            {% if parent_task.parent_id != None %}
+                              <input class="input"  type="" name="parent" id="id_parent" value="{{ parent_task.parent_id }}">
+                            {% else %}
+                              <input class="input"  type="" name="parent" id="id_parent" value="">
+                            {% endif %}
                             <!-- <div class="select">
                               <select>
                                   <option value="None">-- на уровень выше --</option>
