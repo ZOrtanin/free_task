@@ -23,6 +23,6 @@ jobs:
       - name: Deploy
         run: |
           ssh deploy@90.156.134.169 << 'EOF'
-            cd /home/deploy/free_task
-            git pull origin main
+            cd deploy/free_task
+            git pull
           EOF
