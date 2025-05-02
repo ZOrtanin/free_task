@@ -46,56 +46,56 @@
     <section class="hero has-background-light ">
         <div class="container is-fluid ">
             <!-- Хлебные крошки -->
-            <div class="field pt-3 pd-3 has-text-grey-light">
-              <span class="icon-text">
-                {% if parent_task %}
-                  <span class="icon">
-                    <ion-icon name="home-outline"></ion-icon>
-                  </span>
-                  <span class="name_task">               
-                    <a href="{% url 'task_list' %}">Все задачи</a>
-                  </span>
-                {% endif %}
+              <div class="field pt-3 pd-3 has-text-grey-light">
+                <span class="icon-text">
+                  {% if parent_task %}
+                    <span class="icon">
+                      <ion-icon name="home-outline"></ion-icon>
+                    </span>
+                    <span class="name_task">               
+                      <a href="{% url 'task_list' %}">Все задачи</a>
+                    </span>
+                  {% endif %}
 
-                {% if breadcrumbs %}
-                  
-                    {% for mytask in breadcrumbs %}                      
-                      <span class="icon">
-                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                      </span> 
-                      <span class="name_task">
-                        <a href="{% url 'task_list_child' mytask.id %}">{{ mytask.title }}</a>
-                      </span>
-                    {% endfor %}
+                  {% if breadcrumbs %}
                     
-                {% endif %}
+                      {% for mytask in breadcrumbs %}                      
+                        <span class="icon">
+                          <ion-icon name="chevron-forward-outline"></ion-icon>
+                        </span> 
+                        <span class="name_task">
+                          <a href="{% url 'task_list_child' mytask.id %}">{{ mytask.title }}</a>
+                        </span>
+                      {% endfor %}
+                      
+                  {% endif %}
 
-                {% if parent_task %}
-                      <span class="icon">
-                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                      </span> 
-                      <span class="name_task">
-                        <strong>{{ parent_task.title }}</strong>  
-                      </span>                 
-                  
-                  <span class="icon">
-                    <ion-icon name="flag-outline"></ion-icon>
-                  </span>
-                {% endif %}
-               
-              </span>
-            </div>
+                  {% if parent_task %}
+                        <span class="icon">
+                          <ion-icon name="chevron-forward-outline"></ion-icon>
+                        </span> 
+                        <span class="name_task">
+                          <strong>{{ parent_task.title }}</strong>  
+                        </span>                 
+                    
+                    <span class="icon">
+                      <ion-icon name="flag-outline"></ion-icon>
+                    </span>
+                  {% endif %}
+                 
+                </span>
+              </div>
 
             <!-- Ошибки -->
-            <div>              
-              {% if messages %}
-                <ul class="messages">
-                  {% for message in messages %}
-                    <li>{{ message }}</li>
-                  {% endfor %}
-                </ul>
-              {% endif %}              
-            </div>
+              <div>              
+                {% if messages %}
+                  <ul class="messages">
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}              
+              </div>
 
             <div class="columns is-fullheight pt-3">
 
@@ -172,7 +172,7 @@
                           <div class="field">
                               <label class="label">Теги</label>
                               <div class="control">
-                                <textarea class="textarea" placeholder=""></textarea>
+                                <textarea class="textarea" placeholder="В разработке" rows="2"></textarea>
                               </div>                      
                           </div>
 
@@ -181,7 +181,7 @@
                             <label class="label">Тип задачи</label>
                             <div class="select">
                               <select>
-                                <option>Стандарт</option>
+                                <option>В разработке</option>
                                 <option>Покупки</option>
                                 <option>Тренировка</option>
                               </select>
@@ -193,7 +193,7 @@
                             <label class="label">Повторы</label>
                             <div class="select">
                               <select>
-                                <option>нет</option>
+                                <option>В разработке</option>
                                 <option>неделя</option>
                                 <option>месяц</option>
                                 <option>год</option>
@@ -371,14 +371,17 @@
 
                     <div class="field">
                         <label class="label">История</label>
+                        в разработке
                     </div> 
                     
                     <div class="field">
                         <label class="label">Файлы</label>
+                        в разработке
                     </div>                  
 
                     <div class="field">
                         <label class="label">Комментарии</label>
+                        в разработке
                         <div class="box">
                           <article class="media">
                             <div class="media-left">
