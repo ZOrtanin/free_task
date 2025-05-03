@@ -20,5 +20,20 @@ cd free_task
 docker-compose up --build
 ```
 
-3. Бэкенд http://localhost:8000
-4. Фронтенд http://localhost:80
+3. Заходим в консоль free_task_api 
+```bash
+docker exec -it free_task_api bash
+```
+
+4. Делаем миграции
+```bash
+python manage.py makemigrations
+```
+
+5. Запускаем миграции
+```bash
+python manage.py migrate
+```
+
+6. Бэкенд http://localhost:8000
+7. Фронтенд http://localhost:80
