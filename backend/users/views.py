@@ -72,30 +72,17 @@ def dashboard_view(request):
     followers = Follow.objects.filter(following=user).select_related('follower').count()
     following = Follow.objects.filter(follower=user).select_related('following').count()
 
-    if tasks == []:
-        context = {
-            'last_tasks': False,
-            'run_tasks': False,
-            'old_tasks': False,
-            'end_task': False,
-            'end_task_count': False,
-            'count_task': False,       
-            'followers': False,
-            'following': False,
+    context = {
+        'last_tasks': tasks.order_by('-created_at')[:7],
+        'run_tasks': tasks.filter(updated_at__lt=now)[:7],
+        'old_tasks': tasks.filter(updated_at__lt=month_ago)[:7],
+        'end_task': tasks.filter(status_id=2).order_by('updated_at').reverse()[:7],
+        'end_task_count': tasks.filter(status_id=2).count(),
+        'count_task': tasks.count(),       
+        'followers': followers,
+        'following': following,
 
-        }
-    else:
-        context = {
-            'last_tasks': tasks.order_by('-created_at')[:7],
-            'run_tasks': tasks.filter(updated_at__lt=now)[:7],
-            'old_tasks': tasks.filter(updated_at__lt=month_ago)[:7],
-            'end_task': tasks.filter(status_id=2).order_by('updated_at').reverse()[:7],
-            'end_task_count': tasks.filter(status_id=2).count(),
-            'count_task': tasks.count(),       
-            'followers': followers,
-            'following': following,
-
-        }
+    }
 
     return render(request, 'users/dashboard.html', context)
 
@@ -113,6 +100,10 @@ def statistics_view(request):
 def user_page(request, user_name):
 
     user = get_object_or_404(User, username=user_name)
+
+    tasks = Task.objects.filter(
+        author=user       
+        ).order_by('-created_at').reverse()[:7]
     
     # Все, кто следят за user
     followers_qs = Follow.objects.filter(following=user).select_related('follower')
@@ -134,6 +125,7 @@ def user_page(request, user_name):
         'following': following,             # Все, за кем он следит        
         'one_way_followers': one_way_followers,  # Односторонние подписки
         'following_ads': list(following_ads),
+        'tasks': tasks,
     }
 
     return render(request, 'users/profile/profile.html', context)
@@ -141,6 +133,10 @@ def user_page(request, user_name):
 
 @login_required
 def profile(request):
+
+    tasks = Task.objects.filter(
+        author=request.user        
+        ).order_by('-created_at').reverse()[:7]
 
     user = get_object_or_404(User, username=request.user.username)
     # followers = Follow.objects.filter(following=user).select_related("follower")
@@ -165,6 +161,7 @@ def profile(request):
         'following': following,             # Все, за кем он следит        
         'one_way_followers': one_way_followers,  # Односторонние подписки
         'following_ads': list(following_ads),
+        'tasks': tasks,
     }
 
     return render(request, 'users/profile/profile.html', context)

@@ -11,19 +11,19 @@
            
              
                 <div class="column is-3">
-                    <h1 class="title">Профиль {{ request.user.username }}</h1>
+                    <h1 class="title">Профиль {{ profile_user.username }}</h1>
 
                     <div class="field">              
                         <figure class="image is-128x128">
                           <!-- <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" /> -->
-                          <img class="is-rounded" src="/media/{{ request.user.avatar }}" />
+                          <img class="is-rounded" src="/media/{{ profile_user.avatar }}" />
                         </figure>
                     </div>
 
                     <div class="field">
-                        <p>{{ request.user.last_name }}</p>
-                        <p>{{ request.user.first_name }}</p>                        
-                        <p>{{ request.user.middle_name }}</p>
+                        <p>{{ profile_user.last_name }}</p>
+                        <p>{{ profile_user.first_name }}</p>                        
+                        <p>{{ profile_user.middle_name }}</p>
                     </div>
 
                 </div> 
@@ -34,91 +34,12 @@
                             <div class="field">
                                 <label class="label">Можешь помочь</label>                        
                             </div>
-                            <div class="field">
+                            {% for task in tasks %}
+                                
                                 <div class="box">
-                                    <article class="media">                                       
-                                        <div class="media-content">
-                                            <div class="content">
-                                                <p>                                                    
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                                    efficitur sit amet massa 
-                                                </p>
-                                            </div>                                          
-                                        </div>
-                                        <div class="media-right">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </div>
-                                    </article>
+                                  <a href="{% url 'task_list_child' task.id %}">{{ task.title }}</a>
                                 </div>
-                            </div>
-                            <div class="field">
-                                <div class="box">
-                                    <article class="media">                                       
-                                        <div class="media-content">
-                                            <div class="content">
-                                                <p>                                                    
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                                    efficitur sit amet massa 
-                                                </p>
-                                            </div>                                          
-                                        </div>
-                                        <div class="media-right">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="box">
-                                    <article class="media">                                       
-                                        <div class="media-content">
-                                            <div class="content">
-                                                <p>                                                    
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                                    efficitur sit amet massa 
-                                                </p>
-                                            </div>                                          
-                                        </div>
-                                        <div class="media-right">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="box">
-                                    <article class="media">                                       
-                                        <div class="media-content">
-                                            <div class="content">
-                                                <p>                                                    
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                                    efficitur sit amet massa 
-                                                </p>
-                                            </div>                                          
-                                        </div>
-                                        <div class="media-right">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="box">
-                                    <article class="media">                                       
-                                        <div class="media-content">
-                                            <div class="content">
-                                                <p>                                                    
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                                    efficitur sit amet massa 
-                                                </p>
-                                            </div>                                          
-                                        </div>
-                                        <div class="media-right">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
 
                         <div class="column">
