@@ -140,7 +140,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')  # сюда будет собрана статика
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # сюда будет собрана статика
 
 # редиректы логин логаут
 LOGIN_REDIRECT_URL = '/users/dashboard/'  # Куда перенаправлять после входа
