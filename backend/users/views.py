@@ -5,9 +5,10 @@ from .forms import CustomUserCreationForm, CustomLoginForm, UserProfileForm, Cus
 # from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.decorators import login_required
+from django.core.files.base import ContentFile
 
 from django.urls import reverse_lazy
-from .utils import generate_avatar_image
+from .utils import generate_avatar_image, test_avatar, save_avatar_from_base64
 from .models import Follow
 from tasks.models import Task
 from django.db.models import Q
@@ -18,6 +19,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from datetime import timedelta
 
+import base64
+import uuid
+
+print('views.py')
 # Create your views here.
 class CustomLoginView(LoginView):
     form_class = CustomLoginForm
@@ -29,18 +34,22 @@ class CustomLoginView(LoginView):
 
 
 def register(request):
-
-    avatar_path = generate_avatar_image()
-    print(avatar_path)
+    print('регистрация')
+    print(request)
+    avatar_path = "request.POST['canvas_image']"
+    
+    test_avatar()
+    #print(avatar_path)
     # form = CustomUserCreationForm(initial={'avatar': avatar_path})
 
     if request.method == 'POST':
+        canvas_data = request.POST['canvas_image']
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             
             user = form.save()
-
-            user.avatar.name = avatar_path  # Указываем путь относительно MEDIA_ROOT
+            print(form)
+            user.avatar.name = save_avatar_from_base64(canvas_data)  # Указываем путь относительно MEDIA_ROOT
             user.save()
 
             login(request, user)  # Автоматический вход после регистрации
