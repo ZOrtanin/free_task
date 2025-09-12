@@ -12,25 +12,9 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
     >
-     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <style type="text/css">
-        #displayCanvas {
-          display: block; /* Убираем лишние отступы снизу */
-          width: 100%;   /* Растягиваем на 100% ширины родителя */
-          height: 100%;  /* Растягиваем на 100% высоты родителя */
-          border-top-right-radius:5px;
-          border-top-left-radius:5px;
-        }
-        #update_btn {
-            display: block;
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
         
     </style>
-    
 </head>
 <body>
     <section class="section">
@@ -41,29 +25,14 @@
                 <div class="column is-3">
                     <div class="card">
                         <div class="card-image">
-                            <!-- <figure class="image is-4by3">
+                            <figure class="image is-4by3">
                                 {% if avatar_path %}
                                     <img class="" src="/media/{{ MEDIA_URL }}{{ avatar_path }}" />
                                 {% endif %}
-                            </figure> -->
-                            <canvas id="pixelCanvas" width="10" height="10" style="display: none;"></canvas>
-                            <figure class="image is-200x200">
-                                <canvas id="displayCanvas" width="200" height="200"></canvas>
-                                <button id="update_btn" class="button is-primary" onclick="generateImage()">
-                                    <span class="icon">
-                                      <ion-icon name="refresh-outline"></ion-icon>
-                                    </span>
-                                </button>
-                                
                             </figure>
-
-                            
-                            
-                            <!-- <button onclick="generateImage()">Сгенерировать новое</button> -->
-                            <!-- <button onclick="downloadImage()">Скачать изображение</button> -->
                           </div>
                         <div class="card-content">
-                            <p class="title">Регистрация </p>
+                            <p class="title">Регистрация</p>
                             <p class="content">
                                 <div class="field is-centered">
                                     <!-- <label class="label">Name</label>
@@ -73,9 +42,6 @@
                                     <form method="post">
                                         
                                         {% csrf_token %}
-
-                                        <input type="hidden" name="canvas_image" id="canvasImage">
-
                                         {% for field in form %}
                                             <div class="mb-3">
                                                 <label class="label">{{ field.label }}</label>
@@ -89,7 +55,6 @@
                                         {% endfor %}
                                         <button type="submit" class="button is-primary">Зарегистрироваться</button>
                                     </form>
-                                    
                                 </div>
                             </p>
                         </div>
@@ -102,113 +67,4 @@
         </div>
     </section>    
 </body>
-<script>
-        // Элементы canvas
-        const pixelCanvas = document.getElementById('pixelCanvas');
-        const displayCanvas = document.getElementById('displayCanvas');
-        const pixelCtx = pixelCanvas.getContext('2d');
-        const displayCtx = displayCanvas.getContext('2d');
-
-        function arrayToImageWithCanvas(array2D) {
-            //const canvas = document.getElementById('resultCanvas');
-            const ctx = pixelCtx;
-            const size = array2D.length;
-            const scale = pixelCanvas.width / size;
-            
-            // Создаем ImageData
-            const imageData = ctx.createImageData(size, size);
-
-            // Рандомный цвет
-            let rnd_color_r = Math.floor(Math.random() * 2);
-            let rnd_color_g = Math.floor(Math.random() * 2);
-            let rnd_color_b = Math.floor(Math.random() * 2);
-            let add_color = Math.floor(Math.random() * 70);
-
-            console.log(rnd_color_r,rnd_color_g,rnd_color_b)
-
-            if(JSON.stringify([rnd_color_r,rnd_color_g,rnd_color_b]) === JSON.stringify([1,1,1])){
-                console.log('work')
-                rnd_color_g = 0;
-            }
-
-            console.log(rnd_color_r,rnd_color_g,rnd_color_b)
-            
-            // Заполняем данными из массива
-            for (let y = 0; y < size; y++) {
-                for (let x = 0; x < size; x++) {
-                    const index = (y * size + x) * 4;
-                    const pixel = [array2D[y][x],add_color];
-                    
-                    imageData.data[index + 0] = pixel[rnd_color_r]; // Red
-                    imageData.data[index + 1] = pixel[rnd_color_g]; // Green
-                    imageData.data[index + 2] = pixel[rnd_color_b]; // Blue
-                    imageData.data[index + 3] = pixel.a || 255; // Alpha
-                }
-            }
-            
-            // Рисуем на маленьком canvas
-            pixelCtx.putImageData(imageData, 0, 0);
-            
-            // Масштабируем на большой canvas (без сглаживания)
-            displayCtx.imageSmoothingEnabled = false;
-            displayCtx.clearRect(0, 0, 200, 200);
-            console.log(imageData);
-            displayCtx.drawImage(pixelCanvas, 0, 0, 200, 200);
-
-            // Сохраняем в скрытое поле
-            document.getElementById('canvasImage').value = displayCanvas.toDataURL('image/png');
-        }
-
-        function generateArray(){
-            array=[];
-
-            for(let y = 0; y < 10; y++){
-                row = []
-                for (let x = 0; x < 5; x++) {
-                    row.push(Math.floor(Math.random() * 256));
-                }
-                const reversed = [...row].reverse();
-                for (let x = 0; x < 5; x++){
-                    row.push(reversed[x]);
-                }
-
-                array.push(row)
-            }
-
-
-            return array
-        }
-
-        // Функция генерации случайного изображения
-        function generateImage() {
-            let array_my = generateArray();
-            arrayToImageWithCanvas(array_my);
-        }
-
-        // Функция скачивания изображения
-        function downloadImage() {
-            // Создаем временный canvas для скачивания
-            const downloadCanvas = document.createElement('canvas');
-            downloadCanvas.width = 200;
-            downloadCanvas.height = 200;
-            const downloadCtx = downloadCanvas.getContext('2d');
-            
-            // Копируем изображение
-            downloadCtx.imageSmoothingEnabled = false;
-            downloadCtx.drawImage(displayCanvas, 0, 0);
-            
-            // Создаем ссылку для скачивания
-            const link = document.createElement('a');
-            link.download = 'random_image_10x10.png';
-            link.href = downloadCanvas.toDataURL('image/png');
-            link.click();
-        }
-
-        let array_my = generateArray();
-        arrayToImageWithCanvas(array_my);
-        console.log(array_my);
-
-        // Генерируем первое изображение при загрузке
-        //window.onload = generateImage;
-    </script>
 </html>
