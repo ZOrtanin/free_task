@@ -124,14 +124,14 @@
             let rnd_color_b = Math.floor(Math.random() * 2);
             let add_color = Math.floor(Math.random() * 70);
 
-            console.log(rnd_color_r,rnd_color_g,rnd_color_b)
+            // console.log(rnd_color_r,rnd_color_g,rnd_color_b)
 
             if(JSON.stringify([rnd_color_r,rnd_color_g,rnd_color_b]) === JSON.stringify([1,1,1])){
                 console.log('work')
                 rnd_color_g = 0;
             }
 
-            console.log(rnd_color_r,rnd_color_g,rnd_color_b)
+            // console.log(rnd_color_r,rnd_color_g,rnd_color_b)
             
             // Заполняем данными из массива
             for (let y = 0; y < size; y++) {
@@ -152,7 +152,7 @@
             // Масштабируем на большой canvas (без сглаживания)
             displayCtx.imageSmoothingEnabled = false;
             displayCtx.clearRect(0, 0, 200, 200);
-            console.log(imageData);
+            // console.log(imageData);
             displayCtx.drawImage(pixelCanvas, 0, 0, 200, 200);
 
             // Сохраняем в скрытое поле
@@ -206,7 +206,7 @@
 
         let array_my = generateArray();
         arrayToImageWithCanvas(array_my);
-        console.log(array_my);
+        // console.log(array_my);
 
         // Генерируем первое изображение при загрузке
         //window.onload = generateImage;
