@@ -11,3 +11,15 @@ backend/tasks/__pycache__/views.cpython-312.pyc
 backend/users/__pycache__/urls.cpython-312.pyc
 backend/users/__pycache__/utils.cpython-312.pyc
 backend/users/__pycache__/views.cpython-312.pyc
+*.pyc
+backend/config/__pycache__/settings.cpython-312.pyc
+backend/config/__pycache__/urls.cpython-312.pyc
+backend/tasks/__pycache__/forms.cpython-312.pyc
+backend/tasks/__pycache__/urls.cpython-312.pyc
+backend/tasks/__pycache__/views.cpython-312.pyc
+backend/users/__pycache__/urls.cpython-312.pyc
+backend/users/__pycache__/utils.cpython-312.pyc
+backend/users/__pycache__/views.cpython-312.pyc
+/backup
+.DS_Store
+/backend/config/__pycache__
