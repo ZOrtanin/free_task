@@ -10,6 +10,16 @@
         max-width: 200px;
         overflow: hidden;
       }
+
+      @media screen and (max-width: 1216px) {
+        .visibilityBlock {
+          display: block !important;
+          position: absolute;
+          background-color: #fff;
+          z-index: 1;
+          padding: 30px;
+        }
+      }
     </style>
 
     <!-- модальное окно задачи -->
@@ -96,12 +106,42 @@
                   </ul>
                 {% endif %}              
               </div>
-
-            <div class="columns is-fullheight pt-3">
+            
+            <!-- <div class="ixed-grid has-4-cols-widescreen">
+              <div class="grid">
+                <div class="cell is-hidden-desktop-only is-hidden-tablet-only is-hidden-mobile">
+                  <div class="py-3 px-4 has-background-primary has-text-primary-invert has-radius-normal"></div>
+                </div>
+                <div class="cell is-col-span-2">
+                  <div class="py-3 px-4 has-background-primary has-text-primary-invert has-radius-normal"></div>
+                </div>
+                <div class="cell">
+                  <div class="py-3 px-4 has-background-primary has-text-primary-invert has-radius-normal"></div>
+                </div>
+              </div>
+            </div> -->
+            
+            
+            <div  class="fixed-grid has-4-cols">
+              <div class="grid">
+                <div class="cell is-hidden-widescreen">                  
+                  <a role="button" class="button button_display" data-target="descriptionTask">Описание</a>                  
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell is-hidden-widescreen is-flex is-justify-content-flex-end">  
+                <a role="button" class="button button_display" data-target="settingsTask">Настройки</a>           
+                                    
+                </div>
+              </div>
+            </div>
+            <div  class="fixed-grid has-4-cols-widescreen">
+              <div class="grid">
+                
 
                 <!-- Описание задачи -->
                   {% if parent_task %}
-                    <div class="column is-3">
+                    <div id="descriptionTask" class="descriptionTask cell is-hidden-desktop-only is-hidden-tablet-only is-hidden-mobile">
                       <h2>от {{ parent_task.created_at }}</h2>
                       <h1 class="title">{{ parent_task.title }}</h1>
 
@@ -222,10 +262,9 @@
                         <button class="button is-primary mt-3" type="submit">Сохранить</button>
 
                       </form>
-
                     </div>
                   {% else %}
-                    <div class="column is-3">
+                    <div class="cell is-hidden-desktop-only is-hidden-tablet-only is-hidden-mobile">
                       <section class="hero is-fullheight">
                         <div class="hero-head"></div>
                         <div class="hero-body">
@@ -245,7 +284,7 @@
                   {% endif %}
 
                 <!-- Под задачи -->
-                  <div class="column is-5 has-background-white">
+                  <div class="cell is-col-span-2">
                       {% if parent_task %}
                         <div class="column has-text-centered ">
                           <button class="js-modal-trigger button is-primary" data-target="modal-js-example">
@@ -363,22 +402,10 @@
                           </button>
                         </div>
                       {% endif %}
-
                   </div>
 
                 <!-- Настройки -->
-                  <div class="column is-flex-desktop-only">
-
-                    <div class="field">
-                        <label class="label">История</label>
-                        в разработке
-                    </div> 
-                    
-                    <div class="field">
-                        <label class="label">Файлы</label>
-                        в разработке
-                    </div>                  
-
+                  <div id="settingsTask" class="settingsTask cell is-hidden-desktop-only is-hidden-tablet-only is-hidden-mobile">
                     <div class="field">
                         <label class="label">Комментарии</label>
                         в разработке
@@ -430,7 +457,8 @@
                           </div>
                         </div>
 
-                        <div class="field">
+                        <!-- нужно сделать компактнее -->
+                        <!-- <div class="field">
 
                            <div class="file has-name is-right">
                             <label class="file-label">
@@ -445,7 +473,7 @@
                             </label>
                           </div>
 
-                        </div>
+                        </div> -->
 
                       <div class="field">
                           <button class="button is-primary ">Оставить комментарий</button> 
@@ -453,8 +481,21 @@
                         
                     </div>
 
-                  </div>
+                    <div class="field">
 
+                        <label class="label">История</label>
+                        <div class="box"> в разработке</div>
+                       
+                    </div> 
+                    
+                    <div class="field">
+                        <label class="label">Файлы</label>
+                        <div class="box"> в разработке</div>
+                    </div>                  
+                  </div>
+                
+
+              </div>
             </div>
         </div>
     </section>
