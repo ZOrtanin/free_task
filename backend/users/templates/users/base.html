@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" class="theme-light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Мой сайт{% endblock %}</title>
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
-    > -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    >
+    <!-- <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
-    >
+    > -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
@@ -167,15 +168,127 @@
           });
         });
 
+
+        (document.querySelectorAll('.navbar-burger') || []).forEach(($trigger) => {
+          const $menu = document.getElementById('navbarBasicExample');
+
+          $trigger.addEventListener('click', () => {
+            console.log($menu.style.display);
+
+            if($menu.style.display === 'none' || $menu.style.display === ''){
+              $menu.style.display = 'block';
+            }else{
+              $menu.style.display = 'none';
+            }
+          });
+        });
+
+        (document.querySelectorAll('.button_display') || []).forEach(($trigger) => {
+          console.log($trigger.dataset.target)
+          const $panel = document.getElementById($trigger.dataset.target);
+          $trigger.addEventListener('click', () => {
+            console.log($panel);
+
+            if($panel.classList.contains('visibilityBlock')){
+              console.log('1111')
+              
+              $panel.classList.remove('visibilityBlock');
+            }else{
+              console.log('2222')
+              
+              $panel.classList.add('visibilityBlock');
+            }
+          });
+        });
+          
+
+
+
       });
     </script>
     <style>
     </style>
 </head>
 <body>
-    <!-- Шапка -->
-      <nav class="navbar is-light">
-        <div class="container is-fluid">
+    <!-- Шапка новая -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <h1 class="title">FreeTask</h1>
+          </a>
+
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a href="{% url 'dashboard' %}" class="navbar-item">
+              Доска
+            </a>
+            <a href="{% url 'task_list' %}" class="navbar-item">
+              Задачи
+            </a>
+            <a href="{% url 'schedule' %}" class="navbar-item">
+              Расписание
+            </a>
+            <a href="{% url 'statistics' %}" class="navbar-item">
+              Статистика
+            </a>
+            <a href="{% url 'statistics' %}" class="navbar-item">
+              
+              <span class="icon-text">
+                <span>Найти задачу</span>
+                <span class="icon">
+                  <ion-icon name="search-outline"></ion-icon>
+                </span>                
+              </span>
+
+            </a>
+          </div>
+
+          <div class="navbar-end">
+            <div class="navbar-item is-hoverable">
+              <a class="navbar-link">                
+                <strong>{{ request.user.username }}</strong>
+              </a>
+
+              <div class="navbar-dropdown">
+                <a href="{% url 'profile' %}" class="navbar-item">
+                  Профиль
+                </a>
+                <a href="{% url 'settings' %}" class="navbar-item">
+                  Настройки
+                </a>
+                
+                <hr class="navbar-divider">
+                <div class="navbar-item">
+                  <form method="post" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <button type="submit" class="button">Выйти</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="navbar-item">
+              <figure class="image is-24x24">
+                <img class="is-rounded" src="/media/{{ request.user.avatar }}" alt="Image" />
+              </figure>
+            </div> 
+          </div>
+
+        </div>
+    </nav>
+   
+    <!-- Шапка старая -->
+      <!-- <nav class="navbar is-light">
+        
           <div class="navbar-brand">
             <a class="navbar-item" href="#">
               <h1 class="title">FreeTask</h1>
@@ -237,8 +350,8 @@
               </figure>
             </div> 
           </div>
-        </div>
-      </nav> 
+        
+      </nav>  -->
     
 
     <!-- Основное содержимое -->
