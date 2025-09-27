@@ -37,27 +37,25 @@
             return cookieValue;
         }
 
-        if(document.getElementById('task-table')){ 
-          new Sortable(document.getElementById('task-table'), {
-            animation: 150,
-            handle: 'td', // можно настроить, если хочешь тянуть за конкретный столбец
-            onEnd: function (evt) {
-              const order = [];
-              document.querySelectorAll('#task-table tr').forEach(row => {
-                order.push(row.id);
-              });
+        new Sortable(document.getElementById('task-table'), {
+          animation: 150,
+          handle: 'td', // можно настроить, если хочешь тянуть за конкретный столбец
+          onEnd: function (evt) {
+            const order = [];
+            document.querySelectorAll('#task-table tr').forEach(row => {
+              order.push(row.id);
+            });
 
-              fetch('/tasks/tasks/reorder/', {
-                method: 'POST',
-                headers: {
-                  'X-CSRFToken': getCookie('csrftoken'),
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({task_ids: order})
-              });
-            }
-          });
-        }
+            fetch('/tasks/tasks/reorder/', {
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({task_ids: order})
+            });
+          }
+        });
 
         
         function clearModal($el){
@@ -89,7 +87,6 @@
         // Functions to open and close a modal
         function openModal($el) {
           $el.classList.add('is-active');
-          document.getElementById('id_title').focus();
         }
 
         function closeModal($el) {
@@ -129,10 +126,6 @@
         document.addEventListener('keydown', (event) => {
           if(event.key === "Escape") {
             closeAllModals();
-          }
-          if(event.ctrlKey && event.key === 'n'){
-            console.log('new task');
-            openModal(document.getElementById('modal-js-example'));
           }
         });
 
@@ -175,12 +168,12 @@
           });
         });
 
-        // open and close menu burger
+
         (document.querySelectorAll('.navbar-burger') || []).forEach(($trigger) => {
           const $menu = document.getElementById('navbarBasicExample');
 
           $trigger.addEventListener('click', () => {
-            console.log('3121');
+            console.log($menu.style.display);
 
             if($menu.style.display === 'none' || $menu.style.display === ''){
               $menu.style.display = 'block';
@@ -190,7 +183,6 @@
           });
         });
 
-        // open and close settings task
         (document.querySelectorAll('.button_display') || []).forEach(($trigger) => {
           console.log($trigger.dataset.target)
           const $panel = document.getElementById($trigger.dataset.target);
