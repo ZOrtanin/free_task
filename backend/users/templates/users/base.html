@@ -39,7 +39,7 @@
 
         new Sortable(document.getElementById('task-table'), {
           animation: 150,
-          handle: 'td', // можно  настроить, если хочешь тянуть за конкретный столбец
+          handle: 'td', // можно настроить, если хочешь тянуть за конкретный столбец
           onEnd: function (evt) {
             const order = [];
             document.querySelectorAll('#task-table tr').forEach(row => {
