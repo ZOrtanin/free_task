@@ -23,3 +23,4 @@ backend/users/__pycache__/views.cpython-312.pyc
 /backup
 .DS_Store
 /backend/config/__pycache__
+/media/avatars
