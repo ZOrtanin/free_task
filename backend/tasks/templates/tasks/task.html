@@ -406,92 +406,100 @@
 
                 <!-- Настройки -->
                   <div id="settingsTask" class="settingsTask cell is-hidden-desktop-only is-hidden-tablet-only is-hidden-mobile">
+
+                    <!-- История -->
+                      <div class="field">
+                          <label class="label">История</label>
+                          <div class="box"> в разработке</div>
+                      </div> 
+
+                    <!-- файлы -->
+                      <div class="field">
+                          <label class="label">Файлы</label>
+                          <div class="box"> в разработке</div>
+                      </div>
+
                     <div class="field">
                         <label class="label">Комментарии</label>
-                        в разработке
-                        <div class="box">
-                          <article class="media">
-                            <div class="media-left">
-                              <figure class="image is-64x64">
-                                <img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="Image" />
-                              </figure>
-                            </div>
-                            <div class="media-content">
-                              <div class="content">
-                                <p>
-                                  <strong>Егор Кукольщиков</strong> <small>@pic</small>
-                                  <small>31m</small>
-                                  <br />
-                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                  efficitur sit amet massa fringilla egestas. Nullam condimentum luctus
-                                  turpis.
-                                </p>
+                        <!-- Комментарии -->
+                          {% if data_comments.comments %}
+                            {% for comment in data_comments.comments %}
+                              <div class="box">
+                                <article class="media">
+                                  <div class="media-left">
+                                    <figure class="image is-64x64">
+                                      <img src="/media/{{ comment.user.avatar }}" alt="Image" />
+                                    </figure>
+                                  </div>
+                                  <div class="media-content">
+                                    <div class="content">
+                                      <p>
+                                        <strong>{{ comment.user.first_name }} {{ comment.user.last_name }}</strong><small> @{{ comment.user.username }}</small><br />
+                                        <small>{{ comment.created_at }}</small>
+                                        <br />
+                                        {{ comment.text }}
+                                      </p>
+                                    </div>
+                                    <nav class="level is-mobile">
+                                      <div class="level-left">                                                  
+                                      </div>
+                                      <div class="level-right">
+                                        <a href="{% url 'delete_comment' comment.id %}" class="level-item has-text-grey-lighter" aria-label="reply">
+                                          <span class="icon is-small">
+                                            <ion-icon name="trash-outline"></ion-icon>
+                                          </span>
+                                        </a> 
+                                      </div>
+                                    </nav>
+                                  </div>
+                                </article>
                               </div>
-                              <nav class="level is-mobile">
-                                <div class="level-left">
-                                  <a class="level-item" aria-label="reply">
-                                    <span class="icon is-small">
-                                      <i class="fas fa-reply" aria-hidden="true"></i>
-                                    </span>
-                                  </a>
-                                  <a class="level-item" aria-label="retweet">
-                                    <span class="icon is-small">
-                                      <i class="fas fa-retweet" aria-hidden="true"></i>
-                                    </span>
-                                  </a>
-                                  <a class="level-item" aria-label="like">
-                                    <span class="icon is-small">
-                                      <i class="fas fa-heart" aria-hidden="true"></i>
-                                    </span>
-                                  </a>
-                                </div>
-                              </nav>
-                            </div>
-                          </article>
-                        </div>
+                            {% endfor %}
+                          {% else %}
+                            <p>Коментариев нет...</p>
+                          {% endif %}
 
-                        <div class="field">
-                          <label class="label">Оставить комментарий</label>
-                          <div class="control">
-                            <textarea class="textarea" placeholder="... Комментарий"></textarea>
+                        <!-- Форма комментариев -->
+                          <div class="field">
+                            <label class="label">Оставить комментарий</label>
+                            {% if user.is_authenticated %}
+                              <form method="post">
+                                {% csrf_token %}
+                                <div class="field">
+                                  <div class="control">
+                                    <textarea name="text" class="textarea" placeholder="... Комментарий"></textarea>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                    <button class="button is-primary ">Оставить комментарий</button> 
+                                </div>
+                              </form>
+                            {% else %}
+                              <p>Войдите, чтобы оставить комментарий.</p>
+                            {% endif %}                          
                           </div>
-                        </div>
 
                         <!-- нужно сделать компактнее -->
-                        <!-- <div class="field">
+                          <!-- <div class="field">
 
-                           <div class="file has-name is-right">
-                            <label class="file-label">
-                              <input class="file-input" type="file" name="resume" />
-                              <span class="file-cta">
-                                <span class="file-icon">
-                                  <i class="fas fa-upload"></i>
+                             <div class="file has-name is-right">
+                              <label class="file-label">
+                                <input class="file-input" type="file" name="resume" />
+                                <span class="file-cta">
+                                  <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                  </span>
+                                  <span class="file-label"> Choose a file… </span>
                                 </span>
-                                <span class="file-label"> Choose a file… </span>
-                              </span>
-                              <span class="file-name"> Screen Shot 2017-07-29 at 15.54.25.png </span>
-                            </label>
-                          </div>
+                                <span class="file-name"> Screen Shot 2017-07-29 at 15.54.25.png </span>
+                              </label>
+                            </div>
 
-                        </div> -->
-
-                      <div class="field">
-                          <button class="button is-primary ">Оставить комментарий</button> 
-                      </div>
+                          </div> -->
                         
                     </div>
 
-                    <div class="field">
-
-                        <label class="label">История</label>
-                        <div class="box"> в разработке</div>
-                       
-                    </div> 
-                    
-                    <div class="field">
-                        <label class="label">Файлы</label>
-                        <div class="box"> в разработке</div>
-                    </div>                  
+                                      
                   </div>
                 
 
