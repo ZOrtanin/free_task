@@ -1,8 +1,8 @@
 Django>=4.2
 djangorestframework
 gunicorn
-psycopg2
 django-environ
 drf-spectacular
 Pillow
 numpy
+psycopg2

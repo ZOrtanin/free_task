@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TaskForm, ParentTaskForm
+from comments.views import add_comments_task
+# from comments.forms import CommentForm
+# from comments.models import Comment
 from django.contrib.auth.decorators import login_required
 from .models import Task, TaskStatus
 from django.db.models import Case, When, IntegerField
@@ -104,8 +107,14 @@ def task_list(request, task_id=None, error=None):
         context = {
             'tasks': tasks,
             'form': form,
-            'errors': error,
+            'errors': error,            
         }
+
+    # Коментарии
+    if task_id:
+        context.update({
+            'data_comments': add_comments_task(request, task_id, parent_task)
+            })
     
     return render(request, 'tasks/task.html', context)
 
