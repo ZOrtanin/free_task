@@ -1,4 +1,5 @@
-# My Django React App
+# Free-Task
+http://freetask.su
 
 This project consists of a Django backend and a React frontend, all containerized using Docker.
 
